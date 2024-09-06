@@ -8,6 +8,7 @@ import {
   Montserrat_700Bold,
   Montserrat_400Regular,
 } from "@expo-google-fonts/montserrat";
+import SignUp from "./src/pages/signup";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,7 +22,8 @@ export default function App() {
 
   return (
     <View style={globalStyles.container}>
-      <Login />
+      {/* <Login /> */}
+      <SignUp />
       <StatusBar style="auto" />
     </View>
   );
