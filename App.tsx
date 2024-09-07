@@ -8,6 +8,7 @@ import {
   Montserrat_700Bold,
   Montserrat_400Regular,
 } from "@expo-google-fonts/montserrat";
+import Home from "./src/pages/home";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -21,7 +22,7 @@ export default function App() {
 
   return (
     <View style={globalStyles.container}>
-      <Login />
+      <Home />
       <StatusBar style="auto" />
     </View>
   );
