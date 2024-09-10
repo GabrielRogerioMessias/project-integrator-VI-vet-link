@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import Login from "./src/pages/login";
-import { globalStyles } from "./src/global/styles";
+import { AppRegistry, StyleSheet, View } from "react-native";
+import Login from "./app/pages/login";
+import { globalStyles } from "./app/global/styles";
 import {
   useFonts,
   Montserrat_700Bold,

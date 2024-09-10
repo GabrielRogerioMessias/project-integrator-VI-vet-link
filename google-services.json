@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1051977341171",
+    "project_id": "vetlink-9e4d6",
+    "storage_bucket": "vetlink-9e4d6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051977341171:android:c0253e114274818e5b3f86",
+        "android_client_info": {
+          "package_name": "com.galaxies.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9T0e2ymCWTuThuuvKsElrhXV4IrcZYRU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

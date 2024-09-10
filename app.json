@@ -1,30 +1,50 @@
 {
   "expo": {
-    "name": "Vet Link",
-    "slug": "Vet Link",
+    "name": "VetLink",
+    "slug": "VetLink",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.svg",
-    "userInterfaceStyle": "light",
+    "icon": "./app/assets/icon.svg",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./app/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#7B9971"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.galaxies.firebase",
+      "googleServicesFile": "./googleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.galaxies.firebase",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
+      "bundler": "metro",
+      "output": "static",
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-router",
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
