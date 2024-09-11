@@ -94,7 +94,7 @@ export default function Login() {
         </View>
         <View style={style.botContent}>
           {loading ? (
-            <ActivityIndicator size={"small"} style={{ margin: 28 }} />
+            <ActivityIndicator size={"small"} color={themes.colors.white} />
           ) : (
             <>
               <TouchableOpacity onPress={signIn} style={style.loginBtn}>

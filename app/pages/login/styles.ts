@@ -4,6 +4,7 @@ import { themes } from "../../global/themes";
 export const style = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex: 0,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: themes.colors.lightGreen,
@@ -64,7 +65,7 @@ export const style = StyleSheet.create({
   input: {
     height: "100%",
     width: "90%",
-    padding: 12,
+    padding: 8,
     fontSize: 16,
     fontFamily: themes.fonts.text,
   },
@@ -82,11 +83,12 @@ export const style = StyleSheet.create({
     height: "33%",
     width: "100%",
     alignItems: "center",
-    gap: 12,
+    justifyContent: "center",
+    gap: 8,
   },
   loginBtn: {
     width: "100%",
-    padding: 20,
+    padding: 16,
     backgroundColor: themes.colors.darkGreen,
     borderRadius: 8,
     alignItems: "center",
@@ -99,7 +101,7 @@ export const style = StyleSheet.create({
   },
   signupBtn: {
     width: "100%",
-    padding: 20,
+    padding: 16,
     backgroundColor: themes.colors.red,
     borderRadius: 8,
     alignItems: "center",
