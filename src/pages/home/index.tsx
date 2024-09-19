@@ -1,8 +1,6 @@
 import { Keyboard, TouchableWithoutFeedback, View, Text } from "react-native";
 import { style } from "./styles";
 import HomeButton from "../../components/homeButton";
-import Icon from "../../assets/icon.svg";
-import { Svg } from "react-native-svg";
 
 export default function Home() {
   return (
