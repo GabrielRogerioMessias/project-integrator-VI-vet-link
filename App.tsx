@@ -9,6 +9,7 @@ import {
   Montserrat_400Regular,
 } from "@expo-google-fonts/montserrat";
 import SignUp from "./src/pages/signup";
+import Profile from "./src/pages/profile";
 
 
 export default function App() {
