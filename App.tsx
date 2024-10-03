@@ -10,6 +10,7 @@ import {
 } from "@expo-google-fonts/montserrat";
 import SignUp from "./src/pages/signup";
 import Profile from "./src/pages/profile";
+import Pathologies from "./src/pages/pathologies";
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
     <View style={globalStyles.container}>
       {/* <Login /> */}
       <SignUp />
+      <Pathologies />
       <StatusBar style="auto" />
     </View>
   );
