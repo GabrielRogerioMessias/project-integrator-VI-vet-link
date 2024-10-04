@@ -11,6 +11,7 @@ import {
 import SignUp from "./src/pages/signup";
 import Profile from "./src/pages/profile";
 import Pathologies from "./src/pages/pathologies";
+import FeedBackApp from "./src/pages/feedback-app";
 
 
 export default function App() {
@@ -27,7 +28,7 @@ export default function App() {
     <View style={globalStyles.container}>
       {/* <Login /> */}
       <SignUp />
-      <Pathologies />
+      <FeedBackApp />
       <StatusBar style="auto" />
     </View>
   );
