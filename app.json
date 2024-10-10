@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "Vet Link",
-    "slug": "Vet Link",
+    "name": "vet-link",
+    "slug": "vet-link",
+    "scheme": "vet-link",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.svg",
+    "icon": "./app/assets/icon.svg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/splash.png",
+      "image": "./app/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#7B9971"
     },
@@ -23,8 +24,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-font"
-    ]
+    "plugins": ["expo-font", "expo-router"]
   }
 }
