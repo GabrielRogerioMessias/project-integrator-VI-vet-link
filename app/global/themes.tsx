@@ -15,4 +15,7 @@ export const themes = {
     text: "Montserrat_400Regular",
     title: "Montserrat_700Bold",
   },
+  errors: {
+    color: "red",
+  }
 };

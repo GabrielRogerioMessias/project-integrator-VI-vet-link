@@ -28,8 +28,10 @@ export default function App() {
   return (
     <View style={globalStyles.container}>
       {/* <Login /> */}
-      <Home />
+      <SignUp />
+      {/* <Home /> */}
       <StatusBar style="auto" />
     </View>
   );
+
 }
