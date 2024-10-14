@@ -10,5 +10,6 @@ export const globalStyles = StyleSheet.create({
     justifyContent: "center",
     fontSize: 16,
     fontFamily: themes.fonts.text,
+    paddingHorizontal: 12,
   },
 });

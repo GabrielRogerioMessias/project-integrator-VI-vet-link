@@ -1,9 +1,12 @@
 import { Stack } from "expo-router";
 import { themes } from "../global/themes";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import BackArrow from "../assets/back.svg";
+import MenuTab from "../assets/menu.svg"; // Importando o ícone do menu
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import HomeMenu from "../(tabs)/home/menu"; // Importar o menu
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
 
 interface GlobalLayoutProps {
   children: ReactNode;
@@ -11,6 +14,13 @@ interface GlobalLayoutProps {
 
 const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   const navigation = useNavigation();
+
+  // Controlando a visibilidade do menu
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuVisible(!isMenuVisible);
+  };
 
   return (
     <Stack
@@ -25,16 +35,14 @@ const GlobalLayout = ({ children }: GlobalLayoutProps) => {
         },
         headerShadowVisible: false,
         headerBackTitleVisible: false,
-
         headerLeft: () => (
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <BackArrow width={20} height={20} fill={themes.colors.darkGreen} />
+          <TouchableOpacity
+            style={{ paddingLeft: 8 }}
+            onPress={navigation.goBack}
+          >
+            <BackArrow width={20} height={20} />
           </TouchableOpacity>
         ),
-
-        contentStyle: {
-          paddingTop: 20,
-        },
       }}
     >
       {children}

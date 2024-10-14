@@ -7,12 +7,12 @@ export const style = StyleSheet.create({
     backgroundColor: themes.colors.white,
     borderColor: themes.colors.gray,
     borderWidth: 1,
+    width: "100%",
+    height: "50%",
+    justifyContent: "center",
   },
   container: {
-    width: 166,
-    height: 166,
     alignItems: "center",
-    justifyContent: "center",
     gap: 12,
   },
   image: {
