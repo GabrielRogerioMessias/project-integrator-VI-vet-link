@@ -56,6 +56,15 @@ export const style = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
   },
+  boxInputError: {
+    backgroundColor: themes.colors.white,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: themes.colors.red,
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    alignItems: "center",
+  },
   icon: {
     fontSize: 20,
     color: themes.colors.darkGreen,

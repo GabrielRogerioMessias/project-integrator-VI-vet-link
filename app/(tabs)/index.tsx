@@ -28,7 +28,7 @@ export default function App() {
   return (
     <View style={globalStyles.container}>
       {/* <Login /> */}
-      <SignUp />
+      <Login />
       {/* <Home /> */}
       <StatusBar style="auto" />
     </View>

@@ -24,8 +24,6 @@ export default function SignUp() {
 
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>({});
 
-
-
   const schemaForm = Yup.object().shape({
     name: Yup.string().required('Nome é obrigatório'),
     crmv: Yup.string().required("CRMV é obrigatório"),
@@ -43,6 +41,7 @@ export default function SignUp() {
       setErrors({});
       await schemaForm.validate({ name, crmv, email, password, confirmPassword }, { abortEarly: false });
       console.log("Formulário válido", { name, crmv, email, password });
+      //adicionar logica para enviar para o bd
     } catch (err) {
       if (err instanceof ValidationError) {
         const validationErrors: any = {};
@@ -50,7 +49,6 @@ export default function SignUp() {
           validationErrors[error.path] = error.message;
         });
         setErrors(validationErrors);
-        console.log(errors)
       }
     }
   };
