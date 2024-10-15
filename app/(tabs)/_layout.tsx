@@ -12,14 +12,14 @@ const RootLayout = () => {
     setIsMenuVisible(!isMenuVisible);
   };
 
-  //   return (
-  //     <GlobalLayout>
-  //       {/* <Stack.Screen
-  //         name="pathologies/index"
-  //         options={{ headerTitle: "Zoonoses" }}
-  //       /> */}
-  //     </GlobalLayout>
-  //   );
+  return (
+    <GlobalLayout>
+      {<Stack.Screen
+        name="pathologies/index"
+        options={{ headerTitle: "Zoonoses" }}
+      />}
+    </GlobalLayout>
+  );
 };
 
-// export default RootLayout;
+export default RootLayout;
