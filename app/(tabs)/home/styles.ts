@@ -62,22 +62,42 @@ export const menuStyles = StyleSheet.create({
   menuContainer: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
-    justifyContent: "center",
   },
   menuContent: {
     backgroundColor: themes.colors.background,
-    padding: 20,
-    width: "80%",
+    width: "60%",
     height: "100%",
   },
-  menuTitle: {
-    fontSize: 24,
-    marginBottom: 20,
+  topContent: {
+    backgroundColor: themes.colors.lightGreen,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 80,
+    gap: 8,
+  },
+  botContent: {
+    padding: 12,
+    gap: 8,
+  },
+  menuTitleContent: {
+    flexDirection: "row",
+  },
+  menuMiniTitle: {
+    fontSize: 20,
     fontFamily: themes.fonts.title,
+    color: themes.colors.red,
+  },
+  menuBigTitle: {
+    fontSize: 24,
+    fontFamily: themes.fonts.title,
+    color: themes.colors.yellow,
+  },
+  menuExit: {
+    color: themes.colors.white,
+    fontFamily: themes.fonts.text,
   },
   menuItem: {
     fontSize: 18,
-    marginVertical: 10,
     fontFamily: themes.fonts.text,
   },
 });

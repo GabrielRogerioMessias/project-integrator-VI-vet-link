@@ -1,6 +1,13 @@
 import React from "react";
-import { Modal, Text, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Modal,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+  Image,
+} from "react-native";
 import { menuStyles } from "./styles";
+import Logo from "../../assets/icon.svg";
 
 interface HomeMenuProps {
   isMenuVisible: boolean;
@@ -15,16 +22,22 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
       transparent={true}
       onRequestClose={toggleMenu}
     >
-      {/* Envolvendo toda a View com TouchableWithoutFeedback */}
       <TouchableWithoutFeedback onPress={toggleMenu}>
         <View style={menuStyles.menuContainer}>
-          {/* Prevenindo que o toque dentro do menu feche o modal */}
           <TouchableWithoutFeedback>
             <View style={menuStyles.menuContent}>
-              <Text style={menuStyles.menuTitle}>VETLINK</Text>
-              <Text style={menuStyles.menuItem}>Perfil</Text>
-              <Text style={menuStyles.menuItem}>Avaliar app</Text>
-              <Text style={menuStyles.menuItem}>Sair</Text>
+              <View style={menuStyles.topContent}>
+                <Logo width={80} height={80} />
+                <View style={menuStyles.menuTitleContent}>
+                  <Text style={menuStyles.menuMiniTitle}>VET</Text>
+                  <Text style={menuStyles.menuBigTitle}>LINK</Text>
+                </View>
+                <Text style={menuStyles.menuExit}>Sair</Text>
+              </View>
+              <View style={menuStyles.botContent}>
+                <Text style={menuStyles.menuItem}>Perfil</Text>
+                <Text style={menuStyles.menuItem}>Avaliar App</Text>
+              </View>
             </View>
           </TouchableWithoutFeedback>
         </View>
