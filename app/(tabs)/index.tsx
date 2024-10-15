@@ -14,6 +14,7 @@ import Pathologies from "./pathologies";
 import FeedBackApp from "./feedback-app";
 import ChangePassword from "./change-password";
 import Home from "./home";
+import ChangeRegister from "./change-register";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -28,7 +29,7 @@ export default function App() {
   return (
     <View style={globalStyles.container}>
       {/* <Login /> */}
-      <ChangePassword />
+      <ChangeRegister />
       {/* <Home /> */}
       <StatusBar style="auto" />
     </View>

@@ -19,7 +19,7 @@ export default function ChangePassword() {
             .min(6, "A senha deve ter pelo menos 6 caracteres")
             .required("A nova senha é obrigatória"),
         confirNewPassword: Yup.string()
-            .oneOf([Yup.ref("newPassword")], "A confirmação deve ser igual a nova senha")
+            .oneOf([Yup.ref("newPassword")], "A confirmação deve ser igual a nova senhar")
             .required("Confirmação de senha é obrigatória"),
     })
 
