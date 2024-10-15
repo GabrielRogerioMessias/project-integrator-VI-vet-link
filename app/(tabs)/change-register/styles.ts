@@ -46,7 +46,15 @@ export const style = StyleSheet.create({
         borderBottomWidth: 1,
         borderBlockColor: themes.colors.gray,
     },
+    dataInputError: {
+        marginTop: "3%",
+        width: "90%",
+        height: "25%",
+        borderBottomWidth: 1,
+        borderBlockColor: themes.colors.red,
+    },
     inputStyle: {
+        flex: 1,
         fontSize: 16,
         fontFamily: themes.fonts.text,
         height: "100%"

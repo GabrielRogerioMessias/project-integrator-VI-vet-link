@@ -5,10 +5,10 @@ import GlobalLayout from "../global/layout";
 const RootLayout = () => {
   return (
     <GlobalLayout>
-      <Stack.Screen
+      {<Stack.Screen
         name="pathologies/index"
         options={{ headerTitle: "Zoonoses" }}
-      />
+      />}
     </GlobalLayout>
   );
 };

@@ -35,6 +35,17 @@ export const style = StyleSheet.create({
         alignItems: "center",
         flexDirection: "row"
     },
+    containerOptionsError: {
+        width: "100%",
+        height: "8%",
+        backgroundColor: themes.colors.white,
+        borderRadius: 12,
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        borderWidth: 1,
+        borderColor: themes.colors.red
+    },
     startFdb: {
         width: "12%",
         height: "75%",

@@ -50,6 +50,12 @@ export const style = StyleSheet.create({
     borderBlockColor: themes.colors.gray,
     marginTop: 5,
   },
+  dataInputError: {
+    height: "15%",
+    borderBottomWidth: 1,
+    borderBlockColor: themes.colors.red,
+    marginTop: 5,
+  },
   inputStyle: {
     flex: 1,
     fontSize: 16,
