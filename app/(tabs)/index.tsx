@@ -29,7 +29,7 @@ export default function App() {
   return (
     <View style={globalStyles.container}>
       {/* <Login /> */}
-      <ChangeRegister />
+      <FeedBackApp />
       {/* <Home /> */}
       <StatusBar style="auto" />
     </View>
