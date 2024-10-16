@@ -18,6 +18,7 @@ import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { globalStyles } from "../../global/styles";
 import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -89,6 +90,7 @@ export default function Login() {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <KeyboardAvoidingView style={style.container}>
+        <StatusBar backgroundColor={themes.colors.lightGreen} />
         <View style={style.topContent}>
           <Logo width={160} height={160} />
           <View style={style.logoText}>
