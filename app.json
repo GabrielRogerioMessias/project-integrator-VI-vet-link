@@ -8,19 +8,16 @@
     "icon": "./app/assets/icon.svg",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#7B9971",
-
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#7B9971"
     },
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.galaxies.firebase",
       "googleServicesFile": "./googleService-Info.plist"
     },
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -29,13 +26,11 @@
       "package": "com.galaxies.firebase",
       "googleServicesFile": "./google-services.json"
     },
-
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/favicon.png"
     },
-
     "plugins": [
       "expo-font",
       "expo-router",
@@ -52,6 +47,11 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9ac58a9f-2a7a-4fe9-beb0-552449ce6b9d"
+      }
     }
   }
 }
