@@ -11,6 +11,7 @@ import LogoIcon from "../../assets/icon.svg";
 import LikeIcon from "../../assets/like.svg";
 import UserIcon from "../../assets/user.svg";
 import { router } from "expo-router";
+import auth from "@react-native-firebase/auth";
 
 interface HomeMenuProps {
   isMenuVisible: boolean;
@@ -18,6 +19,15 @@ interface HomeMenuProps {
 }
 
 const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
+  const signOutUser = async () => {
+    try {
+      await auth().signOut();
+      router.push("/login");
+    } catch (error) {
+      console.error("Erro ao sair: ", error);
+    }
+  };
+
   return (
     <Modal
       visible={isMenuVisible}
@@ -35,14 +45,21 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                   <Text style={menuStyles.menuMiniTitle}>VET</Text>
                   <Text style={menuStyles.menuBigTitle}>LINK</Text>
                 </View>
-                <Text style={menuStyles.menuExit}>Sair</Text>
+                <TouchableOpacity
+                  onPress={() => {
+                    toggleMenu();
+                    signOutUser();
+                  }}
+                >
+                  <Text style={menuStyles.menuExit}>Sair</Text>
+                </TouchableOpacity>
               </View>
               <View style={menuStyles.botContent}>
                 <TouchableOpacity
                   style={menuStyles.menuItem}
                   onPress={() => {
                     toggleMenu();
-                    router.push("profile");
+                    router.push("/profile");
                   }}
                 >
                   <UserIcon width={20} height={20} />
@@ -52,7 +69,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                   style={menuStyles.menuItem}
                   onPress={() => {
                     toggleMenu();
-                    router.push("feedback-app");
+                    router.push("/feedback-app");
                   }}
                 >
                   <LikeIcon width={20} height={20} />

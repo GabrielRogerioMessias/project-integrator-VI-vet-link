@@ -6,6 +6,7 @@ const RootLayout = () => {
   return (
     <GlobalLayout>
       <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="login/index" options={{ headerShown: false }} />
       <Stack.Screen
         name="pathologies/index"
         options={{ headerTitle: "Zoonoses" }}

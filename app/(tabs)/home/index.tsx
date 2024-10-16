@@ -38,7 +38,7 @@ export default function Home() {
             <View style={style.content}>
               <View style={style.buttonsContainer}>
                 <HomeButton
-                  onPress={() => router.push("pathologies")}
+                  onPress={() => router.push("/pathologies")}
                   imageSource={require("../../assets/Body Cells.png")}
                   buttonText="Zoonoses"
                 />
