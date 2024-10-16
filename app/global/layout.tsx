@@ -15,7 +15,6 @@ interface GlobalLayoutProps {
 const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   const navigation = useNavigation();
 
-  // Controlando a visibilidade do menu
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const toggleMenu = () => {

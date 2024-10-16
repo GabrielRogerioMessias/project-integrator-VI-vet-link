@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, SafeAreaView, StyleSheet, View } from "react-native";
 import Login from "./login";
 import { globalStyles } from "../global/styles";
 import {
@@ -15,6 +15,7 @@ import FeedBackApp from "./feedback-app";
 import ChangePassword from "./change-password";
 import Home from "./home";
 import ChangeRegister from "./change-register";
+import { themes } from "../global/themes";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -27,11 +28,9 @@ export default function App() {
   }
 
   return (
-    <View style={globalStyles.container}>
-      {/* <Login /> */}
-      <Home />
+    <>
       <StatusBar style="auto" />
-    </View>
+      <Login />
+    </>
   );
-
 }

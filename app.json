@@ -7,6 +7,8 @@
     "orientation": "portrait",
     "icon": "./app/assets/icon.svg",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#F0F0F0",
+
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",

@@ -4,10 +4,12 @@ import { themes } from "../../global/themes";
 export const style = StyleSheet.create({
   container: {
     flex: 1,
+    zIndex: 0,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: themes.colors.lightGreen,
     width: "100%",
+    paddingHorizontal: 12,
   },
   topContent: {
     height: "33%",

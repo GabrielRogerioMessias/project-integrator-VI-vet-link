@@ -97,6 +97,10 @@ export const menuStyles = StyleSheet.create({
     fontFamily: themes.fonts.text,
   },
   menuItem: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  menuText: {
     fontSize: 18,
     fontFamily: themes.fonts.text,
   },

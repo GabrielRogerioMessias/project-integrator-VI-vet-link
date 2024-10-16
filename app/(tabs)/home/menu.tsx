@@ -4,10 +4,13 @@ import {
   Text,
   TouchableWithoutFeedback,
   View,
-  Image,
+  TouchableOpacity,
 } from "react-native";
 import { menuStyles } from "./styles";
-import Logo from "../../assets/icon.svg";
+import LogoIcon from "../../assets/icon.svg";
+import LikeIcon from "../../assets/like.svg";
+import UserIcon from "../../assets/user.svg";
+import { router } from "expo-router";
 
 interface HomeMenuProps {
   isMenuVisible: boolean;
@@ -27,7 +30,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
           <TouchableWithoutFeedback>
             <View style={menuStyles.menuContent}>
               <View style={menuStyles.topContent}>
-                <Logo width={80} height={80} />
+                <LogoIcon width={80} height={80} />
                 <View style={menuStyles.menuTitleContent}>
                   <Text style={menuStyles.menuMiniTitle}>VET</Text>
                   <Text style={menuStyles.menuBigTitle}>LINK</Text>
@@ -35,8 +38,26 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                 <Text style={menuStyles.menuExit}>Sair</Text>
               </View>
               <View style={menuStyles.botContent}>
-                <Text style={menuStyles.menuItem}>Perfil</Text>
-                <Text style={menuStyles.menuItem}>Avaliar App</Text>
+                <TouchableOpacity
+                  style={menuStyles.menuItem}
+                  onPress={() => {
+                    toggleMenu();
+                    router.push("profile");
+                  }}
+                >
+                  <UserIcon width={20} height={20} />
+                  <Text style={menuStyles.menuText}>Perfil</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={menuStyles.menuItem}
+                  onPress={() => {
+                    toggleMenu();
+                    router.push("feedback-app");
+                  }}
+                >
+                  <LikeIcon width={20} height={20} />
+                  <Text style={menuStyles.menuText}>Avaliar App</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </TouchableWithoutFeedback>
