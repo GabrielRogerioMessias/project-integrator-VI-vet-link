@@ -144,7 +144,10 @@ export default function Login() {
               <Text style={style.infoText}>OU</Text>
               <View style={style.signupContent}>
                 <Text style={style.signupText}>Não possui cadastro?</Text>
-                <TouchableOpacity onPress={signUp} style={style.signupBtn}>
+                <TouchableOpacity
+                  onPress={() => router.push("/signup")}
+                  style={style.signupBtn}
+                >
                   <Text style={style.btnText}>Cadastre-se agora!</Text>
                 </TouchableOpacity>
               </View>

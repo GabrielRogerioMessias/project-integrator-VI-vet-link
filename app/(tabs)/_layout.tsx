@@ -11,6 +11,10 @@ const RootLayout = () => {
         <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="login/index" options={{ headerShown: false }} />
         <Stack.Screen
+          name="signup/index"
+          options={{ headerTitle: "Cadastro" }}
+        />
+        <Stack.Screen
           name="pathologies/index"
           options={{ headerTitle: "Zoonoses" }}
         />

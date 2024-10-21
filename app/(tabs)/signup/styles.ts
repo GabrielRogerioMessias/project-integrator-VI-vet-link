@@ -62,6 +62,11 @@ export const style = StyleSheet.create({
     fontFamily: themes.fonts.text,
     fontWeight: "regular",
   },
+  errorText: {
+    color: themes.colors.red,
+    fontSize: 12,
+    marginTop: 2,
+  },
   registerBtn: {
     height: "6%",
     width: "100%",

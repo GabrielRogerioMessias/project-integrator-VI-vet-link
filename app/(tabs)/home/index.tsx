@@ -13,6 +13,7 @@ import HomeMenu from "./menu";
 import { useState } from "react";
 import MenuTab from "../../assets/menu.svg";
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 
 export default function Home() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -22,6 +23,7 @@ export default function Home() {
   };
   return (
     <>
+      <StatusBar style="auto" backgroundColor="#F0F0F0" />
       <Stack.Screen
         options={{
           headerTitle: "Home",

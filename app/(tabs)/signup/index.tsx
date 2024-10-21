@@ -5,15 +5,18 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Image,
+  ActivityIndicator,
 } from "react-native";
-import * as Yup from 'yup';
+import * as Yup from "yup";
 import { ValidationError } from "yup";
 import { useState } from "react";
-import { style } from "./styles";
+import { style } from "./styles"; // Assumindo que você já tem estilos definidos
 import { themes } from "../../global/themes";
-import Icon from "../../assets/returnIcon.png";
 import { globalStyles } from "../../global/styles";
+import { StatusBar } from "expo-status-bar";
+import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import { FirebaseError } from "firebase/app";
+import { router } from "expo-router";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -21,27 +24,31 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
-  const [errors, setErrors] = useState<{ [key: string]: string | undefined }>({});
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
+    {}
+  );
 
   const schemaForm = Yup.object().shape({
-    name: Yup.string().required('Nome é obrigatório'),
-    crmv: Yup.string().required("CRMV é obrigatório"),
-    email: Yup.string().email("Email inválido").required("Email é obrigatório"),
+    name: Yup.string().required("Nome obrigatório"),
+    crmv: Yup.string().required("CRMV obrigatório"),
+    email: Yup.string().email("Email inválido").required("Email obrigatório"),
     password: Yup.string()
       .min(6, "A senha deve ter pelo menos 6 caracteres")
       .required("Senha é obrigatória"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "As senhas devem corresponder")
       .required("Confirmação de senha é obrigatória"),
-  })
+  });
 
   const validateForm = async () => {
     try {
       setErrors({});
-      await schemaForm.validate({ name, crmv, email, password, confirmPassword }, { abortEarly: false });
-      console.log("Formulário válido", { name, crmv, email, password });
-      //adicionar logica para enviar para o bd
+      await schemaForm.validate(
+        { name, crmv, email, password, confirmPassword },
+        { abortEarly: false }
+      );
+      return true;
     } catch (err) {
       if (err instanceof ValidationError) {
         const validationErrors: any = {};
@@ -50,127 +57,170 @@ export default function SignUp() {
         });
         setErrors(validationErrors);
       }
+      return false;
     }
   };
 
-  const handleSubmit = () => {
-    validateForm();
-  }
+  const handleSubmit = async () => {
+    const isValid = await validateForm();
+    if (!isValid) return;
+
+    setLoading(true);
+    try {
+      await auth().createUserWithEmailAndPassword(email, password);
+      alert("Cadastro realizado com sucesso! Verifique seu email.");
+      router.push("/home"); // Navega para a tela de "home" após o cadastro
+    } catch (e: any) {
+      const err = e as FirebaseError;
+      alert("Falha no cadastro: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleInputChange = (
+    setter: (value: string) => void,
+    field: string
+  ) => {
+    return (value: string) => {
+      setter(value);
+      // Remover o erro se o usuário digitar algo
+      if (value) {
+        setErrors((prev) => ({ ...prev, [field]: "" }));
+      }
+    };
+  };
+
+  const handleInputFocus = (field: string) => {
+    setErrors((prev) => ({ ...prev, [field]: "" })); // Limpa o erro ao focar no input
+  };
+
+  const getInputValue = (value: string, field: string) => {
+    // Se houver um erro para o campo, exiba a mensagem de erro como valor
+    return errors[field] ? errors[field] : value;
+  };
+
+  const getPasswordSecureTextEntry = (field: string) => {
+    // Exibe a senha normalmente se houver um erro
+    return errors[field] ? false : true;
+  };
+
+  const getInputStyle = (field: string) => {
+    return [
+      style.inputStyle,
+      errors[field] ? style.errorText : style.inputStyle, // Aplica o estilo de erro ou normal
+    ];
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={globalStyles.container}>
+        <StatusBar style="auto" backgroundColor="#F0F0F0" />
         <View style={style.container}>
-          <View style={style.topContent}>
-            <Image source={Icon} resizeMode="contain" />
-            <View style={style.topIten}>
-              <Text style={style.headerText}>Cadastro</Text>
-            </View>
-          </View>
-
           <View style={style.headerContent}>
             <Text style={style.infoText}>DADOS PESSOAIS</Text>
           </View>
           <View style={style.registerContainer}>
             <View style={style.inputContent}>
-              <View style={[style.dataInput, errors.name ? style.dataInputError : null]}>
+              <View
+                style={[
+                  style.dataInput,
+                  errors.name ? style.dataInputError : null,
+                ]}
+              >
                 <TextInput
                   placeholder="NOME"
-                  style={style.inputStyle}
+                  style={getInputStyle("name")} // Usa a função para definir o estilo
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={setName}
-                  value={name}
-                  onFocus={() => {
-                    setErrors((prev) => ({
-                      ...prev,
-                      name: "",
-                    }));
-                  }}
-                ></TextInput>
-                {errors.name && (
-                  <Text style={themes.errors}>{errors.name}</Text>
-                )}
+                  onChangeText={handleInputChange(setName, "name")}
+                  value={getInputValue(name, "name")} // Usa a função para definir o valor
+                  editable={!loading}
+                  onFocus={() => handleInputFocus("name")} // Limpa o erro ao focar
+                />
               </View>
 
-              <View style={[style.dataInput, errors.crmv ? style.dataInputError : null]}>
+              <View
+                style={[
+                  style.dataInput,
+                  errors.crmv ? style.dataInputError : null,
+                ]}
+              >
                 <TextInput
                   placeholder="CRMV"
-                  style={style.inputStyle}
+                  style={getInputStyle("crmv")} // Usa a função para definir o estilo
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={setCrmv}
-                  onFocus={() => {
-                    setErrors((prev) => ({
-                      ...prev,
-                      crmv: "",
-                    }));
-                  }}
-                  value={crmv}
-                ></TextInput>
-                {errors.crmv && (
-                  <Text style={themes.errors}>{errors.crmv}</Text>
-                )}
+                  onChangeText={handleInputChange(setCrmv, "crmv")}
+                  value={getInputValue(crmv, "crmv")} // Usa a função para definir o valor
+                  editable={!loading}
+                  onFocus={() => handleInputFocus("crmv")}
+                />
               </View>
 
-              <View style={[style.dataInput, errors.email ? style.dataInputError : null]}>
+              <View
+                style={[
+                  style.dataInput,
+                  errors.email ? style.dataInputError : null,
+                ]}
+              >
                 <TextInput
                   placeholder="EMAIL"
-                  style={style.inputStyle}
+                  style={getInputStyle("email")} // Usa a função para definir o estilo
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={setEmail}
-                  onFocus={() => {
-                    setErrors((prev) => ({
-                      ...prev,
-                      email: "",
-                    }));
-                  }}
-                  value={email}
-                ></TextInput>
-                {errors.email && (
-                  <Text style={themes.errors}>{errors.email}</Text>
-                )}
+                  onChangeText={handleInputChange(setEmail, "email")}
+                  value={getInputValue(email, "email")} // Usa a função para definir o valor
+                  editable={!loading}
+                  onFocus={() => handleInputFocus("email")}
+                />
               </View>
 
-              <View style={[style.dataInput, errors.password ? style.dataInputError : null]}>
+              <View
+                style={[
+                  style.dataInput,
+                  errors.password ? style.dataInputError : null,
+                ]}
+              >
                 <TextInput
                   placeholder="SENHA"
-                  style={style.inputStyle}
+                  style={getInputStyle("password")} // Usa a função para definir o estilo
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={setPassword}
-                  onFocus={() => {
-                    setErrors((prev) => ({
-                      ...prev,
-                      password: "",
-                    }));
-                  }}
-                  value={password}
-                ></TextInput>
-                {errors.password && (
-                  <Text style={themes.errors}>{errors.password}</Text>
-                )}
+                  onChangeText={handleInputChange(setPassword, "password")}
+                  value={getInputValue(password, "password")} // Usa a função para definir o valor
+                  secureTextEntry={getPasswordSecureTextEntry("password")} // Altera para mostrar a senha ou não
+                  editable={!loading}
+                  onFocus={() => handleInputFocus("password")}
+                />
               </View>
 
-              <View style={[style.dataInput, errors.confirmPassword ? style.dataInputError : null]}>
+              <View
+                style={[
+                  style.dataInput,
+                  errors.confirmPassword ? style.dataInputError : null,
+                ]}
+              >
                 <TextInput
                   placeholder="CONFIRME A SENHA"
-                  style={style.inputStyle}
+                  style={getInputStyle("confirmPassword")} // Usa a função para definir o estilo
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={setConfirmPassword}
-                  onFocus={() => {
-                    setErrors((prev) => ({
-                      ...prev,
-                      confirmPassword: "",
-                    }));
-                  }}
-                  value={confirmPassword}
-                ></TextInput>
-                {errors.confirmPassword && (
-                  <Text style={themes.errors}>{errors.confirmPassword}</Text>
-                )}
+                  onChangeText={handleInputChange(
+                    setConfirmPassword,
+                    "confirmPassword"
+                  )}
+                  value={getInputValue(confirmPassword, "confirmPassword")} // Usa a função para definir o valor
+                  secureTextEntry={getPasswordSecureTextEntry(
+                    "confirmPassword"
+                  )} // Altera para mostrar a senha ou não
+                  editable={!loading}
+                  onFocus={() => handleInputFocus("confirmPassword")}
+                />
               </View>
             </View>
           </View>
           <TouchableOpacity style={style.registerBtn} onPress={handleSubmit}>
-            <Text style={style.btnText}>CADASTRAR</Text>
+            {loading ? (
+              <ActivityIndicator size="small" color={themes.colors.white} />
+            ) : (
+              <Text style={style.btnText}>CADASTRAR</Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>
