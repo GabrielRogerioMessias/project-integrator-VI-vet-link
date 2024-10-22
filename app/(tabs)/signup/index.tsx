@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import * as Yup from "yup";
 import { ValidationError } from "yup";
@@ -78,7 +79,7 @@ export default function SignUp() {
         .get();
 
       if (!existingUser.empty) {
-        alert("CRMV já está em uso.");
+        Alert.alert("Erro", "CRMV já está em uso.");
         setLoading(false);
         return;
       }
@@ -95,13 +96,16 @@ export default function SignUp() {
         email,
       });
 
-      alert("Cadastro realizado com sucesso! Verifique seu email.");
+      Alert.alert(
+        "Sucesso",
+        "Cadastro realizado com sucesso! Verifique seu email."
+      );
       router.push("/home");
     } catch (e: any) {
       const err = e as FirebaseError;
       const errorMessage =
         messages.firebaseErrors[err.code] || "Erro desconhecido.";
-      alert("Falha no cadastro: " + errorMessage);
+      Alert.alert("Erro", "Falha no cadastro: " + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -136,6 +140,21 @@ export default function SignUp() {
       style.inputStyle,
       errors[field] ? style.errorText : style.inputStyle,
     ];
+  };
+
+  const handleCrmvChange = (setter: (value: string) => void, field: string) => {
+    return (value: string) => {
+      if (field === "crmv") {
+        const numericValue = value.replace(/[^0-9]/g, "").substring(0, 5);
+        setter(numericValue);
+      } else {
+        setter(value);
+      }
+
+      if (value) {
+        setErrors((prev) => ({ ...prev, [field]: "" }));
+      }
+    };
   };
 
   return (
@@ -175,10 +194,11 @@ export default function SignUp() {
                   placeholder="CRMV"
                   style={getInputStyle("crmv")}
                   placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleInputChange(setCrmv, "crmv")}
+                  onChangeText={handleCrmvChange(setCrmv, "crmv")}
                   value={getInputValue(crmv, "crmv")}
                   editable={!loading}
                   onFocus={() => handleInputFocus("crmv")}
+                  keyboardType="numeric"
                 />
               </View>
 

@@ -9,6 +9,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   ActivityIndicator,
+  Alert,
 } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { style } from "./styles";
@@ -19,6 +20,7 @@ import { FirebaseError } from "firebase/app";
 import { globalStyles } from "../../global/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import messages from "../../utils/messages";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,6 +28,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -54,26 +57,20 @@ export default function Login() {
     return unsubscribe;
   }, [initializing]);
 
-  const signUp = async () => {
-    setLoading(true);
-    try {
-      await auth().createUserWithEmailAndPassword(email, password);
-      alert("Verifique seu email!");
-    } catch (e: any) {
-      const err = e as FirebaseError;
-      alert("Cadastro rejeitado: " + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const signIn = async () => {
+    if (!email || !password) {
+      Alert.alert("Erro", "Preencha todos os campos antes de continuar.");
+      return;
+    }
+
     setLoading(true);
     try {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert("Falha no login: " + err.message);
+      const errorMessage =
+        messages.firebaseErrors[err.code] || "Erro desconhecido.";
+      Alert.alert("Falha no login ", errorMessage);
     } finally {
       setLoading(false);
     }
@@ -122,11 +119,18 @@ export default function Login() {
                 style={style.input}
                 value={password}
                 onChangeText={setPassword}
-                secureTextEntry
+                secureTextEntry={!isPasswordVisible}
                 placeholder="Senha"
                 placeholderTextColor={themes.colors.gray}
               />
-              <MaterialCommunityIcons name="eye" style={style.icon} />
+              <TouchableOpacity
+                onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+              >
+                <MaterialCommunityIcons
+                  name={isPasswordVisible ? "eye" : "eye-off"}
+                  style={style.icon}
+                />
+              </TouchableOpacity>
             </View>
             <TouchableOpacity style={style.lostPasswordContainer}>
               <Text style={style.lostPassword}>Esqueci minha senha</Text>

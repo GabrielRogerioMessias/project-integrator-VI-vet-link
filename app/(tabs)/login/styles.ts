@@ -74,13 +74,13 @@ export const style = StyleSheet.create({
   input: {
     height: "100%",
     width: "90%",
-    padding: 12,
+    padding: 8,
     fontSize: 16,
     fontFamily: themes.fonts.text,
   },
   lostPasswordContainer: {
     alignSelf: "flex-end",
-    paddingTop: 8,
+    paddingTop: 4,
   },
   lostPassword: {
     fontFamily: themes.fonts.text,
@@ -96,7 +96,7 @@ export const style = StyleSheet.create({
   },
   loginBtn: {
     width: "100%",
-    padding: 20,
+    padding: 16,
     backgroundColor: themes.colors.darkGreen,
     borderRadius: 8,
     alignItems: "center",
@@ -109,7 +109,7 @@ export const style = StyleSheet.create({
   },
   signupBtn: {
     width: "100%",
-    padding: 20,
+    padding: 16,
     backgroundColor: themes.colors.red,
     borderRadius: 8,
     alignItems: "center",

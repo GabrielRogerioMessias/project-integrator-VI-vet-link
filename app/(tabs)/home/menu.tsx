@@ -12,6 +12,7 @@ import LikeIcon from "../../assets/like.svg";
 import UserIcon from "../../assets/user.svg";
 import { router } from "expo-router";
 import auth from "@react-native-firebase/auth";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 
 interface HomeMenuProps {
   isMenuVisible: boolean;
@@ -46,12 +47,17 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                   <Text style={menuStyles.menuBigTitle}>LINK</Text>
                 </View>
                 <TouchableOpacity
+                  style={menuStyles.exitBtn}
                   onPress={() => {
                     toggleMenu();
                     signOutUser();
                   }}
                 >
-                  <Text style={menuStyles.menuExit}>Sair</Text>
+                  <MaterialCommunityIcons
+                    name="location-exit"
+                    style={menuStyles.exitIcon}
+                  />
+                  <Text style={menuStyles.exitText}>Sair</Text>
                 </TouchableOpacity>
               </View>
               <View style={menuStyles.botContent}>
@@ -62,7 +68,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                     router.push("/profile");
                   }}
                 >
-                  <UserIcon width={20} height={20} />
+                  <AntDesign name="user" style={menuStyles.icon} />
                   <Text style={menuStyles.menuText}>Perfil</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -72,7 +78,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                     router.push("/feedback-app");
                   }}
                 >
-                  <LikeIcon width={20} height={20} />
+                  <AntDesign name="like2" style={menuStyles.icon} />
                   <Text style={menuStyles.menuText}>Avaliar App</Text>
                 </TouchableOpacity>
               </View>

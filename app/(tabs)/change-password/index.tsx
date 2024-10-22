@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Alert,
 } from "react-native";
 import { style } from "./styles";
 import { themes } from "../../global/themes";
@@ -14,7 +15,7 @@ import { ValidationError } from "yup";
 import auth from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { router } from "expo-router";
-import messages from "../../utils/messages"; // Importa o arquivo de mensagens
+import messages from "../../utils/messages";
 
 export default function ChangePassword() {
   const [actualPassword, setActualPassword] = useState("");
@@ -24,7 +25,6 @@ export default function ChangePassword() {
     {}
   );
 
-  // Esquema de validação
   const schemaForm = Yup.object().shape({
     actualPassword: Yup.string().required(
       messages.validationErrors.actualPassword
@@ -44,7 +44,6 @@ export default function ChangePassword() {
       .required(messages.validationErrors.confirmNewPassword),
   });
 
-  // Validação do formulário
   const validateForm = async () => {
     try {
       setErrors({});
@@ -65,7 +64,6 @@ export default function ChangePassword() {
     }
   };
 
-  // Submissão do formulário
   const handleSubmit = async () => {
     const isValid = await validateForm();
     if (!isValid) return;
@@ -73,13 +71,13 @@ export default function ChangePassword() {
     try {
       const user = auth().currentUser;
       if (!user) {
-        alert(messages.generic.userNotFound);
+        Alert.alert("Erro", messages.generic.userNotFound);
         return;
       }
 
       const userEmail = user.email;
       if (!userEmail) {
-        alert(messages.generic.emailNotAvailable);
+        Alert.alert("Erro", messages.generic.emailNotAvailable);
         return;
       }
 
@@ -90,7 +88,7 @@ export default function ChangePassword() {
       await user.reauthenticateWithCredential(credential);
 
       await user.updatePassword(newPassword);
-      alert(messages.success.passwordUpdated);
+      Alert.alert("Sucesso", messages.success.passwordUpdated);
 
       router.back();
     } catch (e: any) {
@@ -105,7 +103,7 @@ export default function ChangePassword() {
           actualPassword: messages.firebaseErrors["auth/wrong-password"],
         }));
       } else {
-        alert(firebaseErrorMessage); // Usa a mensagem apropriada
+        Alert.alert("Erro", firebaseErrorMessage);
       }
     }
   };

@@ -93,7 +93,11 @@ export const menuStyles = StyleSheet.create({
     fontFamily: themes.fonts.title,
     color: themes.colors.yellow,
   },
-  menuExit: {
+  exitBtn: {
+    flexDirection: "row",
+    gap: 4,
+  },
+  exitText: {
     color: themes.colors.white,
     fontFamily: themes.fonts.text,
   },
@@ -104,5 +108,14 @@ export const menuStyles = StyleSheet.create({
   menuText: {
     fontSize: 18,
     fontFamily: themes.fonts.text,
+  },
+
+  icon: {
+    fontSize: 20,
+    color: themes.colors.black,
+  },
+  exitIcon: {
+    fontSize: 20,
+    color: themes.colors.white,
   },
 });

@@ -6,8 +6,7 @@ const messages = {
     "auth/requires-recent-login": "Reautenticação necessária.",
     "auth/email-already-in-use": "Este email já está em uso.",
     "auth/invalid-email": "O email é inválido.",
-    // Adicione mais erros conforme necessário
-  } as { [key: string]: string }, // Adicionando o tipo para aceitar qualquer string
+  } as { [key: string]: string },
   validationErrors: {
     actualPassword: "A senha atual é obrigatória",
     newPasswordMin: "A senha deve ter pelo menos 6 caracteres",

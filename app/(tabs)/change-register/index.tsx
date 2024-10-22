@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  Alert,
 } from "react-native";
 import { style } from "./styles";
 import { themes } from "../../global/themes";
@@ -70,7 +71,7 @@ export default function ChangeRegister() {
 
   const updateUser = async () => {
     if (name === originalName) {
-      alert("O novo nome não pode ser igual ao nome atual.");
+      Alert.alert("Erro", "O novo nome não pode ser igual ao nome atual.");
       return;
     }
 
@@ -81,11 +82,11 @@ export default function ChangeRegister() {
           name,
         });
 
-        alert("Dados atualizados com sucesso!");
+        Alert.alert("Sucesso", "Dados atualizados com sucesso!");
         router.back();
       } catch (error) {
         console.error("Erro ao atualizar os dados: ", error);
-        alert("Erro ao atualizar os dados.");
+        Alert.alert("Erro", "Problema ao atualizar os dados.");
       }
     }
   };
