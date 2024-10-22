@@ -2,72 +2,113 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   View,
-  Image,
   Text,
   TouchableOpacity,
   TextInput,
 } from "react-native";
 import { style } from "./styles";
-import Icon from "../../assets/returnIcon.png";
 import { themes } from "../../global/themes";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
 import * as Yup from "yup";
 import { ValidationError } from "yup";
+import { router } from "expo-router";
 
 export default function ChangeRegister() {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
   const [crmv, setCrmv] = useState("");
-
+  const [email, setEmail] = useState("");
+  const [originalName, setOriginalName] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
     {}
   );
 
   const schemaForm = Yup.object().shape({
-    name: Yup.string().required("O nome é obrigatório"),
-    email: Yup.string()
-      .email("Email no formato inválido")
-      .required("O Email é obrigatório"),
-    crmv: Yup.string().required("O CRMV é obrigatório"),
+    name: Yup.string()
+      .required("O nome é obrigatório")
+      .max(30, "O nome deve ter no máximo 30 caracteres"),
   });
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = auth().currentUser;
+      if (user) {
+        const userDoc = await firestore()
+          .collection("users")
+          .doc(user.uid)
+          .get();
+        if (userDoc.exists) {
+          const userData = userDoc.data();
+          setName(userData?.name || "");
+          setOriginalName(userData?.name || "");
+          setCrmv(userData?.crmv || "");
+          setEmail(userData?.email);
+        }
+      }
+    };
+    fetchUserData();
+  }, []);
 
   const validateForm = async () => {
     try {
       setErrors({});
-      await schemaForm.validate({ name, email, crmv }, { abortEarly: false });
-      console.log("Formulário válido", { name, email, crmv });
-      //adicionar logica para enviar a atualização para o BD
+      await schemaForm.validate({ name }, { abortEarly: false });
+      console.log("Formulário válido", { name, crmv });
+      await updateUser();
     } catch (err) {
       if (err instanceof ValidationError) {
         const validationErrors: any = {};
         err.inner.forEach((error: any) => {
           validationErrors[error.path] = error.message;
         });
-        console.log(errors);
+        console.log(validationErrors);
         setErrors(validationErrors);
       }
     }
   };
+
+  const updateUser = async () => {
+    if (name === originalName) {
+      alert("O novo nome não pode ser igual ao nome atual.");
+      return;
+    }
+
+    const user = auth().currentUser;
+    if (user) {
+      try {
+        await firestore().collection("users").doc(user.uid).update({
+          name,
+        });
+
+        alert("Dados atualizados com sucesso!");
+        router.back();
+      } catch (error) {
+        console.error("Erro ao atualizar os dados: ", error);
+        alert("Erro ao atualizar os dados.");
+      }
+    }
+  };
+
   const handleSubmit = () => {
     validateForm();
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={style.container}>
         <View style={style.alterContainer}>
           <View style={style.alterInputContainer}>
-            <View
-              style={[
-                style.dataInput,
-                errors.name ? style.dataInputError : null,
-              ]}
-            >
+            <View style={style.dataInput}>
               <TextInput
                 placeholder="Nome"
                 style={style.inputStyle}
                 placeholderTextColor={themes.colors.gray}
-                onChangeText={setName}
+                onChangeText={(value) => {
+                  if (value.length <= 30) {
+                    setName(value);
+                  }
+                }}
                 value={name}
                 onFocus={() => {
                   setErrors((prev) => ({
@@ -78,49 +119,23 @@ export default function ChangeRegister() {
               />
               {errors.name && <Text style={themes.errors}>{errors.name}</Text>}
             </View>
-            <View
-              style={[
-                style.dataInput,
-                errors.email ? style.dataInputError : null,
-              ]}
-            >
+            <View style={style.dataInput}>
               <TextInput
-                placeholder="email@exemplo.com.br"
+                placeholder="Email"
                 style={style.inputStyle}
                 placeholderTextColor={themes.colors.gray}
-                onChangeText={setEmail}
                 value={email}
-                onFocus={() => {
-                  setErrors((prev) => ({
-                    ...prev,
-                    email: "",
-                  }));
-                }}
+                editable={false}
               />
-              {errors.email && (
-                <Text style={themes.errors}>{errors.email}</Text>
-              )}
             </View>
-            <View
-              style={[
-                style.dataInput,
-                errors.crmv ? style.dataInputError : null,
-              ]}
-            >
+            <View style={style.dataInput}>
               <TextInput
                 placeholder="CRMV"
                 style={style.inputStyle}
                 placeholderTextColor={themes.colors.gray}
-                onChangeText={setCrmv}
                 value={crmv}
-                onFocus={() => {
-                  setErrors((prev) => ({
-                    ...prev,
-                    crmv: "",
-                  }));
-                }}
+                editable={false}
               />
-              {errors.crmv && <Text style={themes.errors}>{errors.crmv}</Text>}
             </View>
           </View>
         </View>

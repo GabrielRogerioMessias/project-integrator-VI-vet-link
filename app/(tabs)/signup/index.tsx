@@ -10,13 +10,15 @@ import {
 import * as Yup from "yup";
 import { ValidationError } from "yup";
 import { useState } from "react";
-import { style } from "./styles"; // Assumindo que você já tem estilos definidos
+import { style } from "./styles";
 import { themes } from "../../global/themes";
 import { globalStyles } from "../../global/styles";
 import { StatusBar } from "expo-status-bar";
 import auth, { FirebaseAuthTypes } from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore"; // Importa o Firestore
 import { FirebaseError } from "firebase/app";
 import { router } from "expo-router";
+import messages from "../../utils/messages";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -31,7 +33,9 @@ export default function SignUp() {
 
   const schemaForm = Yup.object().shape({
     name: Yup.string().required("Nome obrigatório"),
-    crmv: Yup.string().required("CRMV obrigatório"),
+    crmv: Yup.string()
+      .matches(/^\d{5}$/, "CRMV deve ser numérico e ter 5 dígitos")
+      .required("CRMV obrigatório"),
     email: Yup.string().email("Email inválido").required("Email obrigatório"),
     password: Yup.string()
       .min(6, "A senha deve ter pelo menos 6 caracteres")
@@ -66,13 +70,38 @@ export default function SignUp() {
     if (!isValid) return;
 
     setLoading(true);
+
     try {
-      await auth().createUserWithEmailAndPassword(email, password);
+      const existingUser = await firestore()
+        .collection("users")
+        .where("crmv", "==", crmv)
+        .get();
+
+      if (!existingUser.empty) {
+        alert("CRMV já está em uso.");
+        setLoading(false);
+        return;
+      }
+
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password
+      );
+
+      await firestore().collection("users").doc(userCredential.user.uid).set({
+        id: userCredential.user.uid,
+        name,
+        crmv,
+        email,
+      });
+
       alert("Cadastro realizado com sucesso! Verifique seu email.");
-      router.push("/home"); // Navega para a tela de "home" após o cadastro
+      router.push("/home");
     } catch (e: any) {
       const err = e as FirebaseError;
-      alert("Falha no cadastro: " + err.message);
+      const errorMessage =
+        messages.firebaseErrors[err.code] || "Erro desconhecido.";
+      alert("Falha no cadastro: " + errorMessage);
     } finally {
       setLoading(false);
     }
@@ -84,7 +113,6 @@ export default function SignUp() {
   ) => {
     return (value: string) => {
       setter(value);
-      // Remover o erro se o usuário digitar algo
       if (value) {
         setErrors((prev) => ({ ...prev, [field]: "" }));
       }
@@ -92,23 +120,21 @@ export default function SignUp() {
   };
 
   const handleInputFocus = (field: string) => {
-    setErrors((prev) => ({ ...prev, [field]: "" })); // Limpa o erro ao focar no input
+    setErrors((prev) => ({ ...prev, [field]: "" }));
   };
 
   const getInputValue = (value: string, field: string) => {
-    // Se houver um erro para o campo, exiba a mensagem de erro como valor
     return errors[field] ? errors[field] : value;
   };
 
   const getPasswordSecureTextEntry = (field: string) => {
-    // Exibe a senha normalmente se houver um erro
     return errors[field] ? false : true;
   };
 
   const getInputStyle = (field: string) => {
     return [
       style.inputStyle,
-      errors[field] ? style.errorText : style.inputStyle, // Aplica o estilo de erro ou normal
+      errors[field] ? style.errorText : style.inputStyle,
     ];
   };
 
@@ -130,12 +156,12 @@ export default function SignUp() {
               >
                 <TextInput
                   placeholder="NOME"
-                  style={getInputStyle("name")} // Usa a função para definir o estilo
+                  style={getInputStyle("name")}
                   placeholderTextColor={themes.colors.gray}
                   onChangeText={handleInputChange(setName, "name")}
-                  value={getInputValue(name, "name")} // Usa a função para definir o valor
+                  value={getInputValue(name, "name")}
                   editable={!loading}
-                  onFocus={() => handleInputFocus("name")} // Limpa o erro ao focar
+                  onFocus={() => handleInputFocus("name")}
                 />
               </View>
 
@@ -147,10 +173,10 @@ export default function SignUp() {
               >
                 <TextInput
                   placeholder="CRMV"
-                  style={getInputStyle("crmv")} // Usa a função para definir o estilo
+                  style={getInputStyle("crmv")}
                   placeholderTextColor={themes.colors.gray}
                   onChangeText={handleInputChange(setCrmv, "crmv")}
-                  value={getInputValue(crmv, "crmv")} // Usa a função para definir o valor
+                  value={getInputValue(crmv, "crmv")}
                   editable={!loading}
                   onFocus={() => handleInputFocus("crmv")}
                 />
@@ -164,10 +190,10 @@ export default function SignUp() {
               >
                 <TextInput
                   placeholder="EMAIL"
-                  style={getInputStyle("email")} // Usa a função para definir o estilo
+                  style={getInputStyle("email")}
                   placeholderTextColor={themes.colors.gray}
                   onChangeText={handleInputChange(setEmail, "email")}
-                  value={getInputValue(email, "email")} // Usa a função para definir o valor
+                  value={getInputValue(email, "email")}
                   editable={!loading}
                   onFocus={() => handleInputFocus("email")}
                 />
@@ -181,11 +207,11 @@ export default function SignUp() {
               >
                 <TextInput
                   placeholder="SENHA"
-                  style={getInputStyle("password")} // Usa a função para definir o estilo
+                  style={getInputStyle("password")}
                   placeholderTextColor={themes.colors.gray}
                   onChangeText={handleInputChange(setPassword, "password")}
-                  value={getInputValue(password, "password")} // Usa a função para definir o valor
-                  secureTextEntry={getPasswordSecureTextEntry("password")} // Altera para mostrar a senha ou não
+                  value={getInputValue(password, "password")}
+                  secureTextEntry={getPasswordSecureTextEntry("password")}
                   editable={!loading}
                   onFocus={() => handleInputFocus("password")}
                 />
@@ -199,16 +225,16 @@ export default function SignUp() {
               >
                 <TextInput
                   placeholder="CONFIRME A SENHA"
-                  style={getInputStyle("confirmPassword")} // Usa a função para definir o estilo
+                  style={getInputStyle("confirmPassword")}
                   placeholderTextColor={themes.colors.gray}
                   onChangeText={handleInputChange(
                     setConfirmPassword,
                     "confirmPassword"
                   )}
-                  value={getInputValue(confirmPassword, "confirmPassword")} // Usa a função para definir o valor
+                  value={getInputValue(confirmPassword, "confirmPassword")}
                   secureTextEntry={getPasswordSecureTextEntry(
                     "confirmPassword"
-                  )} // Altera para mostrar a senha ou não
+                  )}
                   editable={!loading}
                   onFocus={() => handleInputFocus("confirmPassword")}
                 />

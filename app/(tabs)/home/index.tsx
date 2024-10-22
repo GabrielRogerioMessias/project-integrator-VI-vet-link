@@ -10,23 +10,55 @@ import HomeButton from "../../components/homeButton";
 import { router, Stack } from "expo-router";
 import { globalStyles } from "../../global/styles";
 import HomeMenu from "./menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MenuTab from "../../assets/menu.svg";
 import React from "react";
 import { StatusBar } from "expo-status-bar";
+import firestore from "@react-native-firebase/firestore";
+import auth from "@react-native-firebase/auth";
 
 export default function Home() {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [firstName, setFirstName] = useState("");
 
   const toggleMenu = () => {
     setIsMenuVisible(!isMenuVisible);
   };
+
+  useEffect(() => {
+    const user = auth().currentUser;
+    if (user) {
+      const unsubscribe = firestore()
+        .collection("users")
+        .doc(user.uid)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            if (userData && userData.name) {
+              setFirstName(userData.name);
+            }
+          }
+        });
+
+      return () => unsubscribe();
+    }
+  }, []);
+
+  const getDisplayedName = () => {
+    if (firstName) {
+      return firstName.length > 10
+        ? firstName.substring(0, 10) + "..."
+        : firstName;
+    }
+    return "Usuário";
+  };
+
   return (
     <>
       <StatusBar style="auto" backgroundColor="#F0F0F0" />
       <Stack.Screen
         options={{
-          headerTitle: "Home",
+          headerTitle: `Olá, ${getDisplayedName()}`,
           headerLeft: () => (
             <TouchableOpacity style={{ paddingLeft: 8 }} onPress={toggleMenu}>
               <MenuTab width={20} height={20} />
@@ -44,21 +76,6 @@ export default function Home() {
                   imageSource={require("../../assets/Body Cells.png")}
                   buttonText="Zoonoses"
                 />
-                {/* <HomeButton
-                onPress={() => alert("Analises clínicas")}
-                imageSource={require("../../assets/Blood Sample.png")}
-                buttonText="patologias"
-              />
-              <HomeButton
-                onPress={() => alert("Prescrição")}
-                imageSource={require("../../assets/Treatment.png")}
-                buttonText="Prescrição"
-              />
-              <HomeButton
-                onPress={() => alert("Emergencia")}
-                imageSource={require("../../assets/Veterinarian.png")}
-                buttonText="Emergência"
-              /> */}
               </View>
             </View>
           </View>
