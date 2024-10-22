@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { style } from "./styles";
-import HomeButton from "../../components/homeButton";
+import HomeButton from "../../components/HomeButton";
 import { router, Stack } from "expo-router";
 import { globalStyles } from "../../global/styles";
 import HomeMenu from "./menu";

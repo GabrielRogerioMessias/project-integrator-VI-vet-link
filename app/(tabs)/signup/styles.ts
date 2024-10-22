@@ -16,6 +16,9 @@ export const style = StyleSheet.create({
   registerContainer: {
     backgroundColor: themes.colors.white,
     borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    gap: 4,
   },
   headerText: {
     fontSize: 20,
@@ -26,11 +29,6 @@ export const style = StyleSheet.create({
     fontSize: 16,
     fontFamily: themes.fonts.text,
     color: themes.colors.gray,
-  },
-  inputContent: {
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    gap: 4,
   },
   dataInput: {
     borderBottomWidth: 1,
