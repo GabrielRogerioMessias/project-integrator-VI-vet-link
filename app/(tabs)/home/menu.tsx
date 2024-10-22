@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Modal,
   Text,
   TouchableWithoutFeedback,
   View,
   TouchableOpacity,
+  Animated,
 } from "react-native";
-import { menuStyles } from "./styles";
+import {
+  menuStyles,
+  slideInAnimation,
+  slideOutAnimation,
+  fadeInAnimation,
+  fadeOutAnimation,
+} from "./styles";
 import LogoIcon from "../../assets/icon.svg";
-import LikeIcon from "../../assets/like.svg";
-import UserIcon from "../../assets/user.svg";
 import { router } from "expo-router";
 import auth from "@react-native-firebase/auth";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -20,6 +25,9 @@ interface HomeMenuProps {
 }
 
 const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
+  const slideAnim = useRef(new Animated.Value(-300)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+
   const signOutUser = async () => {
     try {
       await auth().signOut();
@@ -29,17 +37,47 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
     }
   };
 
+  const closeMenuWithAnimation = () => {
+    Animated.parallel([
+      slideOutAnimation(slideAnim),
+      fadeOutAnimation(opacityAnim),
+    ]).start(() => {
+      toggleMenu();
+    });
+  };
+
+  useEffect(() => {
+    if (isMenuVisible) {
+      Animated.parallel([
+        slideInAnimation(slideAnim),
+        fadeInAnimation(opacityAnim),
+      ]).start();
+    } else {
+      Animated.parallel([
+        slideOutAnimation(slideAnim),
+        fadeOutAnimation(opacityAnim),
+      ]).start();
+    }
+  }, [isMenuVisible]);
+
   return (
     <Modal
       visible={isMenuVisible}
-      animationType="slide"
       transparent={true}
-      onRequestClose={toggleMenu}
+      onRequestClose={closeMenuWithAnimation}
+      animationType="none"
     >
-      <TouchableWithoutFeedback onPress={toggleMenu}>
-        <View style={menuStyles.menuContainer}>
+      <TouchableWithoutFeedback onPress={closeMenuWithAnimation}>
+        <Animated.View
+          style={[menuStyles.menuContainer, { opacity: opacityAnim }]}
+        >
           <TouchableWithoutFeedback>
-            <View style={menuStyles.menuContent}>
+            <Animated.View
+              style={[
+                menuStyles.menuContent,
+                { transform: [{ translateX: slideAnim }] },
+              ]}
+            >
               <View style={menuStyles.topContent}>
                 <LogoIcon width={80} height={80} />
                 <View style={menuStyles.menuTitleContent}>
@@ -49,7 +87,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                 <TouchableOpacity
                   style={menuStyles.exitBtn}
                   onPress={() => {
-                    toggleMenu();
+                    closeMenuWithAnimation();
                     signOutUser();
                   }}
                 >
@@ -64,7 +102,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                 <TouchableOpacity
                   style={menuStyles.menuItem}
                   onPress={() => {
-                    toggleMenu();
+                    closeMenuWithAnimation();
                     router.push("/profile");
                   }}
                 >
@@ -74,7 +112,7 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                 <TouchableOpacity
                   style={menuStyles.menuItem}
                   onPress={() => {
-                    toggleMenu();
+                    closeMenuWithAnimation();
                     router.push("/feedback-app");
                   }}
                 >
@@ -82,9 +120,9 @@ const HomeMenu = ({ isMenuVisible, toggleMenu }: HomeMenuProps) => {
                   <Text style={menuStyles.menuText}>Avaliar App</Text>
                 </TouchableOpacity>
               </View>
-            </View>
+            </Animated.View>
           </TouchableWithoutFeedback>
-        </View>
+        </Animated.View>
       </TouchableWithoutFeedback>
     </Modal>
   );

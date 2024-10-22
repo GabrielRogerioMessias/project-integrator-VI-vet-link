@@ -162,102 +162,104 @@ export default function SignUp() {
       <View style={globalStyles.container}>
         <StatusBar style="auto" backgroundColor="#F0F0F0" />
         <View style={style.container}>
-          <View style={style.headerContent}>
+          <View style={style.mainContent}>
             <Text style={style.infoText}>DADOS PESSOAIS</Text>
-          </View>
-          <View style={style.registerContainer}>
-            <View style={style.inputContent}>
-              <View
-                style={[
-                  style.dataInput,
-                  errors.name ? style.dataInputError : null,
-                ]}
-              >
-                <TextInput
-                  placeholder="NOME"
-                  style={getInputStyle("name")}
-                  placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleInputChange(setName, "name")}
-                  value={getInputValue(name, "name")}
-                  editable={!loading}
-                  onFocus={() => handleInputFocus("name")}
-                />
-              </View>
+            <View style={style.registerContainer}>
+              <View style={style.inputContent}>
+                <View
+                  style={[
+                    style.dataInput,
+                    errors.name ? style.dataInputError : null,
+                  ]}
+                >
+                  <TextInput
+                    placeholder="NOME"
+                    style={getInputStyle("name")}
+                    placeholderTextColor={themes.colors.gray}
+                    onChangeText={handleInputChange(setName, "name")}
+                    value={getInputValue(name, "name")}
+                    editable={!loading}
+                    onFocus={() => handleInputFocus("name")}
+                  />
+                </View>
 
-              <View
-                style={[
-                  style.dataInput,
-                  errors.crmv ? style.dataInputError : null,
-                ]}
-              >
-                <TextInput
-                  placeholder="CRMV"
-                  style={getInputStyle("crmv")}
-                  placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleCrmvChange(setCrmv, "crmv")}
-                  value={getInputValue(crmv, "crmv")}
-                  editable={!loading}
-                  onFocus={() => handleInputFocus("crmv")}
-                  keyboardType="numeric"
-                />
-              </View>
+                <View
+                  style={[
+                    style.dataInput,
+                    errors.crmv ? style.dataInputError : null,
+                  ]}
+                >
+                  <TextInput
+                    placeholder="CRMV"
+                    style={getInputStyle("crmv")}
+                    placeholderTextColor={themes.colors.gray}
+                    onChangeText={handleCrmvChange(setCrmv, "crmv")}
+                    value={getInputValue(crmv, "crmv")}
+                    editable={!loading}
+                    onFocus={() => handleInputFocus("crmv")}
+                    keyboardType="numeric"
+                  />
+                </View>
 
-              <View
-                style={[
-                  style.dataInput,
-                  errors.email ? style.dataInputError : null,
-                ]}
-              >
-                <TextInput
-                  placeholder="EMAIL"
-                  style={getInputStyle("email")}
-                  placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleInputChange(setEmail, "email")}
-                  value={getInputValue(email, "email")}
-                  editable={!loading}
-                  onFocus={() => handleInputFocus("email")}
-                />
-              </View>
+                <View
+                  style={[
+                    style.dataInput,
+                    errors.email ? style.dataInputError : null,
+                  ]}
+                >
+                  <TextInput
+                    placeholder="EMAIL"
+                    style={getInputStyle("email")}
+                    placeholderTextColor={themes.colors.gray}
+                    onChangeText={handleInputChange(setEmail, "email")}
+                    value={getInputValue(email, "email")}
+                    editable={!loading}
+                    onFocus={() => handleInputFocus("email")}
+                  />
+                </View>
 
-              <View
-                style={[
-                  style.dataInput,
-                  errors.password ? style.dataInputError : null,
-                ]}
-              >
-                <TextInput
-                  placeholder="SENHA"
-                  style={getInputStyle("password")}
-                  placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleInputChange(setPassword, "password")}
-                  value={getInputValue(password, "password")}
-                  secureTextEntry={getPasswordSecureTextEntry("password")}
-                  editable={!loading}
-                  onFocus={() => handleInputFocus("password")}
-                />
-              </View>
+                <View
+                  style={[
+                    style.dataInput,
+                    errors.password ? style.dataInputError : null,
+                  ]}
+                >
+                  <TextInput
+                    placeholder="SENHA"
+                    style={getInputStyle("password")}
+                    placeholderTextColor={themes.colors.gray}
+                    onChangeText={handleInputChange(setPassword, "password")}
+                    value={getInputValue(password, "password")}
+                    secureTextEntry={getPasswordSecureTextEntry("password")}
+                    editable={!loading}
+                    onFocus={() => handleInputFocus("password")}
+                  />
+                </View>
 
-              <View
-                style={[
-                  style.dataInput,
-                  errors.confirmPassword ? style.dataInputError : null,
-                ]}
-              >
-                <TextInput
-                  placeholder="CONFIRME A SENHA"
-                  style={getInputStyle("confirmPassword")}
-                  placeholderTextColor={themes.colors.gray}
-                  onChangeText={handleInputChange(
-                    setConfirmPassword,
-                    "confirmPassword"
-                  )}
-                  value={getInputValue(confirmPassword, "confirmPassword")}
-                  secureTextEntry={getPasswordSecureTextEntry(
-                    "confirmPassword"
-                  )}
-                  editable={!loading}
-                  onFocus={() => handleInputFocus("confirmPassword")}
-                />
+                <View
+                  style={[
+                    style.dataInputnoBorder,
+                    errors.confirmPassword
+                      ? style.dataInputErrornoBorder
+                      : null,
+                  ]}
+                >
+                  <TextInput
+                    placeholder="CONFIRME A SENHA"
+                    style={getInputStyle("confirmPassword")}
+                    placeholderTextColor={themes.colors.gray}
+                    onChangeText={handleInputChange(
+                      setConfirmPassword,
+                      "confirmPassword"
+                    )}
+                    value={getInputValue(confirmPassword, "confirmPassword")}
+                    secureTextEntry={getPasswordSecureTextEntry(
+                      "confirmPassword"
+                    )}
+                    editable={!loading}
+                    onFocus={() => handleInputFocus("confirmPassword")}
+                  />
+                </View>
               </View>
             </View>
           </View>

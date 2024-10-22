@@ -11,6 +11,7 @@ import { themes } from "../global/themes";
 import { globalStyles } from "../global/styles";
 import { ActivityIndicator, View } from "react-native";
 import Home from "./home";
+import SignUp from "./signup";
 
 export default function App() {
   const [fontsLoaded] = useFonts({

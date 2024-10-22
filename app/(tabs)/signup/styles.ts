@@ -7,74 +7,60 @@ export const style = StyleSheet.create({
     backgroundColor: themes.colors.background,
     width: "100%",
     paddingHorizontal: 12,
+    gap: 20,
   },
-  topContent: {
-    alignItems: "center",
-    flexDirection: "row",
-    height: "14%",
+  mainContent: {
     width: "100%",
+    gap: 8,
   },
-  topIten: {
-    position: "absolute",
-    width: "100%",
-    alignItems: "center",
+  registerContainer: {
+    backgroundColor: themes.colors.white,
+    borderRadius: 12,
   },
   headerText: {
     fontSize: 20,
     color: themes.colors.darkGreen,
     fontFamily: themes.fonts.title,
   },
-  headerContent: {
-    width: "100%",
-    marginBottom: 5,
-  },
   infoText: {
     fontSize: 16,
     fontFamily: themes.fonts.text,
     color: themes.colors.gray,
   },
-  registerContainer: {
-    height: "30%",
-    width: "99%",
-    backgroundColor: themes.colors.white,
-    borderRadius: 12,
-  },
   inputContent: {
-    margin: "4%",
-    justifyContent: "space-between",
-    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    gap: 4,
   },
   dataInput: {
-    height: "15%",
     borderBottomWidth: 1,
     borderBlockColor: themes.colors.gray,
-    marginTop: 5,
+  },
+  dataInputnoBorder: {
+    borderBlockColor: themes.colors.gray,
   },
   dataInputError: {
-    height: "15%",
     borderBottomWidth: 1,
     borderBlockColor: themes.colors.red,
-    marginTop: 5,
+  },
+  dataInputErrornoBorder: {
+    borderBlockColor: themes.colors.red,
   },
   inputStyle: {
-    flex: 1,
     fontSize: 16,
     fontFamily: themes.fonts.text,
-    fontWeight: "regular",
   },
   errorText: {
     color: themes.colors.red,
     fontSize: 12,
-    marginTop: 2,
   },
   registerBtn: {
-    height: "6%",
+    paddingVertical: 12,
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: themes.colors.orange,
     borderRadius: 8,
-    marginTop: "4%",
   },
   btnText: {
     fontSize: 16,

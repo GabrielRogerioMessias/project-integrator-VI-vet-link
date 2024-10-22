@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Animated, Easing, StyleSheet } from "react-native";
 import { themes } from "../../global/themes";
 
 export const style = StyleSheet.create({
@@ -65,7 +65,7 @@ export const menuStyles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   menuContent: {
-    backgroundColor: themes.colors.background,
+    backgroundColor: themes.colors.white,
     width: "60%",
     height: "100%",
   },
@@ -119,3 +119,28 @@ export const menuStyles = StyleSheet.create({
     color: themes.colors.white,
   },
 });
+
+export const createAnimation = (toValue: number, duration: number) => {
+  return {
+    toValue,
+    duration,
+    easing: Easing.ease,
+    useNativeDriver: true,
+  };
+};
+
+export const slideInAnimation = (slideAnim: Animated.Value) => {
+  return Animated.timing(slideAnim, createAnimation(0, 300));
+};
+
+export const slideOutAnimation = (slideAnim: Animated.Value) => {
+  return Animated.timing(slideAnim, createAnimation(-300, 300));
+};
+
+export const fadeInAnimation = (opacityAnim: Animated.Value) => {
+  return Animated.timing(opacityAnim, createAnimation(1, 300));
+};
+
+export const fadeOutAnimation = (opacityAnim: Animated.Value) => {
+  return Animated.timing(opacityAnim, createAnimation(0, 300));
+};
