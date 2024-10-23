@@ -1,14 +1,14 @@
 import React from "react";
 import { View, TextInput } from "react-native";
-import { style } from "../../(tabs)/signup/styles";
+import { style } from "./styles";
 import { themes } from "../../global/themes";
 
 interface FormInputProps {
   placeholder: string;
   value: string;
-  onChangeText: (text: string) => void;
+  onChangeText?: (text: string) => void;
   editable?: boolean;
-  onFocus: () => void;
+  onFocus?: () => void;
   error?: string;
   secureTextEntry?: boolean;
   keyboardType?: "default" | "numeric";
@@ -18,9 +18,9 @@ interface FormInputProps {
 export const FormInput: React.FC<FormInputProps> = ({
   placeholder,
   value,
-  onChangeText,
+  onChangeText = () => {},
   editable = true,
-  onFocus,
+  onFocus = () => {},
   error,
   secureTextEntry = false,
   keyboardType = "default",

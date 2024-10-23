@@ -15,6 +15,7 @@ import auth from "@react-native-firebase/auth";
 import * as Yup from "yup";
 import { ValidationError } from "yup";
 import { router } from "expo-router";
+import { FormInput } from "../../components/FormInput";
 
 export default function ChangeRegister() {
   const [name, setName] = useState("");
@@ -99,46 +100,35 @@ export default function ChangeRegister() {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={style.container}>
         <View style={style.alterContainer}>
-          <View style={style.alterInputContainer}>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="Nome"
-                style={style.inputStyle}
-                placeholderTextColor={themes.colors.gray}
-                onChangeText={(value) => {
-                  if (value.length <= 30) {
-                    setName(value);
-                  }
-                }}
-                value={name}
-                onFocus={() => {
-                  setErrors((prev) => ({
-                    ...prev,
-                    name: "",
-                  }));
-                }}
-              />
-              {errors.name && <Text style={themes.errors}>{errors.name}</Text>}
-            </View>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="Email"
-                style={style.inputStyle}
-                placeholderTextColor={themes.colors.gray}
-                value={email}
-                editable={false}
-              />
-            </View>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="CRMV"
-                style={style.inputStyle}
-                placeholderTextColor={themes.colors.gray}
-                value={crmv}
-                editable={false}
-              />
-            </View>
-          </View>
+          <FormInput
+            placeholder="Nome"
+            onChangeText={(value) => {
+              if (value.length <= 30) {
+                setName(value);
+              }
+            }}
+            value={name}
+            onFocus={() => {
+              setErrors((prev) => ({
+                ...prev,
+                name: "",
+              }));
+            }}
+            field="name"
+            error={errors.name}
+          />
+          <FormInput
+            placeholder="Email"
+            value={email}
+            field="email"
+            editable={false}
+          />
+          <FormInput
+            placeholder="CRMV"
+            value={crmv}
+            editable={false}
+            field="crmv"
+          />
         </View>
         <TouchableOpacity style={style.saveBtn} onPress={handleSubmit}>
           <Text style={style.textBtn}>SALVAR</Text>

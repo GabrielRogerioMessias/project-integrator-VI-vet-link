@@ -1,6 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text, ActivityIndicator } from "react-native";
-import { style } from "../../(tabs)/signup/styles";
+import { style } from "./styles";
 import { themes } from "../../global/themes";
 
 interface SubmitButtonProps {
