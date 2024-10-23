@@ -12,6 +12,7 @@ interface FormInputProps {
   error?: string;
   secureTextEntry?: boolean;
   keyboardType?: "default" | "numeric";
+  field: string;
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -23,14 +24,30 @@ export const FormInput: React.FC<FormInputProps> = ({
   error,
   secureTextEntry = false,
   keyboardType = "default",
+  field,
 }) => {
   const inputStyle = [
     style.inputStyle,
     error ? style.errorText : style.inputStyle,
   ];
 
+  const containerStyle = [
+    field === "confirmPassword" ? style.dataInputnoBorder : style.dataInput,
+    error
+      ? field === "confirmPassword"
+        ? style.dataInputErrornoBorder
+        : style.dataInputError
+      : field === "confirmPassword"
+      ? style.dataInputnoBorder
+      : null,
+  ];
+
+  const isPasswordField = field === "password" || field === "confirmPassword";
+  const currentSecureTextEntry =
+    error && isPasswordField ? false : secureTextEntry;
+
   return (
-    <View style={[style.dataInput, error ? style.dataInputError : null]}>
+    <View style={containerStyle}>
       <TextInput
         placeholder={placeholder}
         style={inputStyle}
@@ -39,7 +56,7 @@ export const FormInput: React.FC<FormInputProps> = ({
         value={error || value}
         editable={editable}
         onFocus={onFocus}
-        secureTextEntry={secureTextEntry}
+        secureTextEntry={currentSecureTextEntry}
         keyboardType={keyboardType}
       />
     </View>

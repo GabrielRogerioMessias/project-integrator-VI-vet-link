@@ -92,6 +92,7 @@ export default function SignUp() {
                 onChangeText={setName}
                 onFocus={() => setErrors((prev) => ({ ...prev, name: "" }))}
                 error={errors.name}
+                field="name"
               />
               <FormInput
                 placeholder="CRMV"
@@ -102,6 +103,7 @@ export default function SignUp() {
                 onFocus={() => setErrors((prev) => ({ ...prev, crmv: "" }))}
                 error={errors.crmv}
                 keyboardType="numeric"
+                field="crmv"
               />
               <FormInput
                 placeholder="EMAIL"
@@ -109,6 +111,7 @@ export default function SignUp() {
                 onChangeText={setEmail}
                 onFocus={() => setErrors((prev) => ({ ...prev, email: "" }))}
                 error={errors.email}
+                field="email"
               />
               <FormInput
                 placeholder="SENHA"
@@ -117,6 +120,7 @@ export default function SignUp() {
                 onFocus={() => setErrors((prev) => ({ ...prev, password: "" }))}
                 error={errors.password}
                 secureTextEntry
+                field="password"
               />
               <FormInput
                 placeholder="CONFIRME A SENHA"
@@ -127,6 +131,7 @@ export default function SignUp() {
                 }
                 error={errors.confirmPassword}
                 secureTextEntry
+                field="confirmPassword"
               />
             </View>
           </View>
