@@ -15,6 +15,10 @@ const RootLayout = () => {
           options={{ headerTitle: "Cadastro" }}
         />
         <Stack.Screen
+          name="forgot-password/index"
+          options={{ headerTitle: "Recuperar senha" }}
+        />
+        <Stack.Screen
           name="pathologies/index"
           options={{ headerTitle: "Zoonoses" }}
         />

@@ -9,12 +9,9 @@ export const style = StyleSheet.create({
     paddingHorizontal: 12,
     gap: 20,
   },
-  alterContainer: {
-    width: "100%",
-    backgroundColor: themes.colors.white,
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    gap: 4,
+
+  description: {
+    fontFamily: themes.fonts.text,
+    color: themes.colors.darkGreen,
   },
 });

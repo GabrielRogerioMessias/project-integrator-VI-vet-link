@@ -3,12 +3,9 @@ import {
   TouchableWithoutFeedback,
   View,
   Text,
-  TouchableOpacity,
-  TextInput,
   Alert,
 } from "react-native";
 import { style } from "./styles";
-import { themes } from "../../global/themes";
 import React, { useEffect, useState } from "react";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
@@ -16,6 +13,7 @@ import * as Yup from "yup";
 import { ValidationError } from "yup";
 import { router } from "expo-router";
 import { FormInput } from "../../components/FormInput";
+import { SubmitButton } from "../../components/SubmitButton";
 
 export default function ChangeRegister() {
   const [name, setName] = useState("");
@@ -25,6 +23,7 @@ export default function ChangeRegister() {
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
     {}
   );
+  const [loading, setLoading] = useState(false);
 
   const schemaForm = Yup.object().shape({
     name: Yup.string()
@@ -53,6 +52,7 @@ export default function ChangeRegister() {
   }, []);
 
   const validateForm = async () => {
+    setLoading(true);
     try {
       setErrors({});
       await schemaForm.validate({ name }, { abortEarly: false });
@@ -67,6 +67,8 @@ export default function ChangeRegister() {
         console.log(validationErrors);
         setErrors(validationErrors);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -114,25 +116,17 @@ export default function ChangeRegister() {
                 name: "",
               }));
             }}
-            field="name"
             error={errors.name}
           />
-          <FormInput
-            placeholder="Email"
-            value={email}
-            field="email"
-            editable={false}
-          />
+          <FormInput placeholder="Email" value={email} editable={false} />
           <FormInput
             placeholder="CRMV"
             value={crmv}
             editable={false}
-            field="crmv"
+            lastInput={true}
           />
         </View>
-        <TouchableOpacity style={style.saveBtn} onPress={handleSubmit}>
-          <Text style={style.textBtn}>SALVAR</Text>
-        </TouchableOpacity>
+        <SubmitButton loading={loading} label="SALVAR" onPress={handleSubmit} />
       </View>
     </TouchableWithoutFeedback>
   );

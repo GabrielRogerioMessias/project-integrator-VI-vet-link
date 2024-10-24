@@ -1,6 +1,6 @@
 import * as Yup from "yup";
+import messages from "../utils/messages";
 
-// Define o esquema de validação
 export const schemaForm = Yup.object().shape({
   name: Yup.string().required("Nome obrigatório"),
   crmv: Yup.string()
@@ -15,24 +15,39 @@ export const schemaForm = Yup.object().shape({
     .required("Confirmação de senha é obrigatória"),
 });
 
-// Função genérica para validar qualquer formulário com Yup
+export const changePasswordSchema = Yup.object().shape({
+  actualPassword: Yup.string().required(
+    messages.validationErrors.actualPassword
+  ),
+  newPassword: Yup.string()
+    .min(6, messages.validationErrors.newPasswordMin)
+    .notOneOf(
+      [Yup.ref("actualPassword")],
+      messages.validationErrors.newPasswordNotSame
+    )
+    .required(messages.validationErrors.newPasswordRequired),
+  confirmNewPassword: Yup.string()
+    .oneOf(
+      [Yup.ref("newPassword")],
+      messages.validationErrors.confirmPasswordMatch
+    )
+    .required(messages.validationErrors.confirmNewPassword),
+});
+
 export const validateForm = async (
   schema: Yup.ObjectSchema<any>,
   formData: any,
   setErrors: (errors: { [key: string]: string }) => void
 ): Promise<boolean> => {
   try {
-    // Limpa os erros atuais
     setErrors({});
 
-    // Valida o formulário
     await schema.validate(formData, { abortEarly: false });
     return true;
   } catch (err) {
     if (err instanceof Yup.ValidationError) {
       const validationErrors: { [key: string]: string } = {};
 
-      // Mapeia os erros para o objeto de erros
       err.inner.forEach((error) => {
         if (error.path) {
           validationErrors[error.path] = error.message;

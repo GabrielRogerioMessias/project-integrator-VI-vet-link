@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { themes } from "../../global/themes";
 export const style = StyleSheet.create({
   dataInput: {
+    width: "100%",
     borderBottomWidth: 1,
     borderBlockColor: themes.colors.gray,
   },

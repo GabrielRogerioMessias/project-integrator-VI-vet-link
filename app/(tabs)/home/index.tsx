@@ -2,7 +2,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   View,
-  Text,
   TouchableOpacity,
 } from "react-native";
 import { style } from "./styles";
@@ -46,9 +45,11 @@ export default function Home() {
 
   const getDisplayedName = () => {
     if (firstName) {
-      return firstName.length > 10
-        ? firstName.substring(0, 10) + "..."
-        : firstName;
+      const nameParts = firstName.split(" ");
+      const displayedName = nameParts[0];
+      return displayedName.length > 10
+        ? displayedName.substring(0, 10) + "..."
+        : displayedName;
     }
     return "Usuário";
   };

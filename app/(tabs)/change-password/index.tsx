@@ -1,72 +1,33 @@
-import {
-  Keyboard,
-  TouchableWithoutFeedback,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Alert,
-} from "react-native";
-import { style } from "./styles";
-import { themes } from "../../global/themes";
+import { Keyboard, TouchableWithoutFeedback, View, Alert } from "react-native";
 import React, { useState } from "react";
-import * as Yup from "yup";
-import { ValidationError } from "yup";
 import auth from "@react-native-firebase/auth";
 import { FirebaseError } from "firebase/app";
 import { router } from "expo-router";
 import messages from "../../utils/messages";
+import { FormInput } from "../../components/FormInput";
+import { globalStyles } from "../../global/styles";
+import { SubmitButton } from "../../components/SubmitButton";
+import { changePasswordSchema, validateForm } from "../../utils/validation";
+import { style } from "./styles";
 
 export default function ChangePassword() {
   const [actualPassword, setActualPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [confirNewPassword, setConfirmNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string | undefined }>(
     {}
   );
 
-  const schemaForm = Yup.object().shape({
-    actualPassword: Yup.string().required(
-      messages.validationErrors.actualPassword
-    ),
-    newPassword: Yup.string()
-      .min(6, messages.validationErrors.newPasswordMin)
-      .notOneOf(
-        [Yup.ref("actualPassword")],
-        messages.validationErrors.newPasswordNotSame
-      )
-      .required(messages.validationErrors.newPasswordRequired),
-    confirNewPassword: Yup.string()
-      .oneOf(
-        [Yup.ref("newPassword")],
-        messages.validationErrors.confirmPasswordMatch
-      )
-      .required(messages.validationErrors.confirmNewPassword),
-  });
-
-  const validateForm = async () => {
-    try {
-      setErrors({});
-      await schemaForm.validate(
-        { actualPassword, newPassword, confirNewPassword },
-        { abortEarly: false }
-      );
-      return true;
-    } catch (err) {
-      if (err instanceof ValidationError) {
-        const validationErrors: any = {};
-        err.inner.forEach((error: any) => {
-          validationErrors[error.path] = error.message;
-        });
-        setErrors(validationErrors);
-      }
-      return false;
-    }
-  };
-
   const handleSubmit = async () => {
-    const isValid = await validateForm();
+    const isValid = await validateForm(
+      changePasswordSchema,
+      { actualPassword, newPassword, confirmNewPassword },
+      setErrors
+    );
     if (!isValid) return;
+
+    setLoading(true);
 
     try {
       const user = auth().currentUser;
@@ -105,81 +66,57 @@ export default function ChangePassword() {
       } else {
         Alert.alert("Erro", firebaseErrorMessage);
       }
+    } finally {
+      setLoading(false);
     }
-  };
-
-  const handleInputChange = (
-    setter: (value: string) => void,
-    field: string
-  ) => {
-    return (value: string) => {
-      setter(value);
-      if (value) {
-        setErrors((prev) => ({ ...prev, [field]: "" }));
-      }
-    };
-  };
-
-  const handleInputFocus = (field: string) => {
-    setErrors((prev) => ({ ...prev, [field]: "" }));
-  };
-
-  const getInputStyle = (field: string) => {
-    return [style.inputStyle, errors[field] ? style.errorText : null];
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={style.container}>
-        <View style={style.alterContainer}>
-          <View style={style.alterInputContainer}>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="Senha atual"
-                style={getInputStyle("actualPassword")}
-                placeholderTextColor={themes.colors.gray}
-                onChangeText={handleInputChange(
-                  setActualPassword,
-                  "actualPassword"
-                )}
-                value={
-                  errors.actualPassword ? errors.actualPassword : actualPassword
-                }
-                onFocus={() => handleInputFocus("actualPassword")}
-              />
-            </View>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="Nova senha"
-                style={getInputStyle("newPassword")}
-                placeholderTextColor={themes.colors.gray}
-                onChangeText={handleInputChange(setNewPassword, "newPassword")}
-                value={errors.newPassword ? errors.newPassword : newPassword}
-                onFocus={() => handleInputFocus("newPassword")}
-              />
-            </View>
-            <View style={style.dataInput}>
-              <TextInput
-                placeholder="Confirme a nova senha"
-                style={getInputStyle("confirNewPassword")}
-                placeholderTextColor={themes.colors.gray}
-                onChangeText={handleInputChange(
-                  setConfirmNewPassword,
-                  "confirNewPassword"
-                )}
-                value={
-                  errors.confirNewPassword
-                    ? errors.confirNewPassword
-                    : confirNewPassword
-                }
-                onFocus={() => handleInputFocus("confirNewPassword")}
-              />
-            </View>
+      <View style={globalStyles.container}>
+        <View style={style.container}>
+          <View style={style.alterContainer}>
+            <FormInput
+              placeholder="Senha atual"
+              onChangeText={setActualPassword}
+              value={actualPassword}
+              onFocus={() =>
+                setErrors((prev) => ({ ...prev, actualPassword: "" }))
+              }
+              error={errors.actualPassword}
+              secureTextEntry
+              field="password"
+            />
+            <FormInput
+              placeholder="Nova senha"
+              onChangeText={setNewPassword}
+              value={newPassword}
+              onFocus={() =>
+                setErrors((prev) => ({ ...prev, newPassword: "" }))
+              }
+              error={errors.newPassword}
+              secureTextEntry
+              field="password"
+            />
+            <FormInput
+              placeholder="Confirme a nova senha"
+              onChangeText={setConfirmNewPassword}
+              value={confirmNewPassword}
+              onFocus={() =>
+                setErrors((prev) => ({ ...prev, confirmNewPassword: "" }))
+              }
+              error={errors.confirmNewPassword}
+              secureTextEntry
+              lastInput={true}
+              field="password"
+            />
           </View>
+          <SubmitButton
+            loading={loading}
+            label="SALVAR"
+            onPress={handleSubmit}
+          />
         </View>
-        <TouchableOpacity style={style.saveBtn} onPress={handleSubmit}>
-          <Text style={style.textBtn}>SALVAR</Text>
-        </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
   );

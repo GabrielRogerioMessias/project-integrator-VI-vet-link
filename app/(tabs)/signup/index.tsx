@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { FormInput } from "../../components/FormInput";
 import { SubmitButton } from "../../components/SubmitButton";
-import { schemaForm, validateForm } from "../../utils/validation"; // Coloque suas validações aqui
+import { schemaForm, validateForm } from "../../utils/validation";
 import { globalStyles } from "../../global/styles";
 import { style } from "./styles";
 import auth from "@react-native-firebase/auth";
@@ -63,11 +63,7 @@ export default function SignUp() {
         email,
       });
 
-      Alert.alert(
-        "Sucesso",
-        "Cadastro realizado com sucesso! Verifique seu email."
-      );
-      router.push("/home");
+      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
     } catch (e: any) {
       const err = e as FirebaseError;
       const errorMessage =
@@ -92,7 +88,6 @@ export default function SignUp() {
                 onChangeText={setName}
                 onFocus={() => setErrors((prev) => ({ ...prev, name: "" }))}
                 error={errors.name}
-                field="name"
               />
               <FormInput
                 placeholder="CRMV"
@@ -103,7 +98,6 @@ export default function SignUp() {
                 onFocus={() => setErrors((prev) => ({ ...prev, crmv: "" }))}
                 error={errors.crmv}
                 keyboardType="numeric"
-                field="crmv"
               />
               <FormInput
                 placeholder="EMAIL"
@@ -111,7 +105,6 @@ export default function SignUp() {
                 onChangeText={setEmail}
                 onFocus={() => setErrors((prev) => ({ ...prev, email: "" }))}
                 error={errors.email}
-                field="email"
               />
               <FormInput
                 placeholder="SENHA"
@@ -131,7 +124,8 @@ export default function SignUp() {
                 }
                 error={errors.confirmPassword}
                 secureTextEntry
-                field="confirmPassword"
+                lastInput={true}
+                field="password"
               />
             </View>
           </View>
