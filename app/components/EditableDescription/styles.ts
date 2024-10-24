@@ -15,7 +15,7 @@ export const style = StyleSheet.create({
     color: themes.colors.darkGreen,
   },
   separator: {
-    height: 2,
+    height: 1,
     backgroundColor: themes.colors.darkGreen,
   },
   descriptionContainer: {
