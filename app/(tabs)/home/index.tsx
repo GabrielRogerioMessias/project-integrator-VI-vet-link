@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import {
   Keyboard,
   TouchableWithoutFeedback,
@@ -9,9 +10,8 @@ import HomeButton from "../../components/HomeButton";
 import { router, Stack } from "expo-router";
 import { globalStyles } from "../../global/styles";
 import HomeMenu from "./menu";
-import { useState, useEffect } from "react";
 import MenuTab from "../../assets/menu.svg";
-import React from "react";
+import PathologyIcon from "../../assets/pathology.svg";
 import { StatusBar } from "expo-status-bar";
 import firestore from "@react-native-firebase/firestore";
 import auth from "@react-native-firebase/auth";
@@ -74,7 +74,7 @@ export default function Home() {
               <View style={style.buttonsContainer}>
                 <HomeButton
                   onPress={() => router.push("/pathologies")}
-                  imageSource={require("../../assets/Body Cells.png")}
+                  VectorIcon={PathologyIcon}
                   buttonText="Zoonoses"
                 />
               </View>

@@ -14,7 +14,6 @@ import { style } from "./styles";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 import { FirebaseError } from "firebase/app";
-import { router } from "expo-router";
 import messages from "../../utils/messages";
 import { StatusBar } from "expo-status-bar";
 

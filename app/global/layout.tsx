@@ -1,10 +1,8 @@
 import { Stack } from "expo-router";
 import { themes } from "../global/themes";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import BackArrow from "../assets/back.svg";
-import MenuTab from "../assets/menu.svg"; // Importando o ícone do menu
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import HomeMenu from "../(tabs)/home/menu"; // Importar o menu
+import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
@@ -14,12 +12,6 @@ interface GlobalLayoutProps {
 
 const GlobalLayout = ({ children }: GlobalLayoutProps) => {
   const navigation = useNavigation();
-
-  const [isMenuVisible, setIsMenuVisible] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
 
   return (
     <Stack

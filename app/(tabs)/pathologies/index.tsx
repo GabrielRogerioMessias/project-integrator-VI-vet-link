@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import Icon from "../../assets/returnIcon.png";
 import moreThan from "../../assets/MoreThanIcon.png";
 import { style } from "./styles";
 import { globalStyles } from "../../global/styles";
+import { router } from "expo-router";
 
 export default function Pathologies() {
   return (
@@ -19,26 +19,38 @@ export default function Pathologies() {
         <View style={style.container}>
           <View style={style.containerOptions}>
             <View style={style.optionContainerOne}>
-              <TouchableOpacity style={style.bntStyle}>
+              <TouchableOpacity
+                onPress={() => router.push("/zoonoses/leptospirose")}
+                style={style.bntStyle}
+              >
                 <Text style={style.btnText}>Leptospirose</Text>
               </TouchableOpacity>
               <Image source={moreThan} resizeMode="contain" />
             </View>
             <View style={style.optionContainerOne}>
-              <TouchableOpacity style={style.bntStyle}>
+              <TouchableOpacity
+                onPress={() => router.push("/zoonoses/leishmaniose")}
+                style={style.bntStyle}
+              >
                 <Text style={style.btnText}>Leishmaniose</Text>
               </TouchableOpacity>
               <Image source={moreThan} resizeMode="contain" />
             </View>
             <View style={style.optionContainerOne}>
-              <TouchableOpacity style={style.bntStyle}>
+              <TouchableOpacity
+                onPress={() => router.push("/zoonoses/raiva")}
+                style={style.bntStyle}
+              >
                 <Text style={style.btnText}>Raiva</Text>
               </TouchableOpacity>
               <Image source={moreThan} resizeMode="contain" />
             </View>
             <View style={style.optionContainersTwo}>
-              <TouchableOpacity style={style.bntStyle}>
-                <Text style={style.btnText}>Taxoplasmose</Text>
+              <TouchableOpacity
+                onPress={() => router.push("/zoonoses/toxoplasmose")}
+                style={style.bntStyle}
+              >
+                <Text style={style.btnText}>Toxoplasmose</Text>
               </TouchableOpacity>
               <Image source={moreThan} resizeMode="contain" />
             </View>

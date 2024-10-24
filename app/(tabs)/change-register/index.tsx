@@ -14,6 +14,7 @@ import { ValidationError } from "yup";
 import { router } from "expo-router";
 import { FormInput } from "../../components/FormInput";
 import { SubmitButton } from "../../components/SubmitButton";
+import { globalStyles } from "../../global/styles";
 
 export default function ChangeRegister() {
   const [name, setName] = useState("");
@@ -100,33 +101,39 @@ export default function ChangeRegister() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={style.container}>
-        <View style={style.alterContainer}>
-          <FormInput
-            placeholder="Nome"
-            onChangeText={(value) => {
-              if (value.length <= 30) {
-                setName(value);
-              }
-            }}
-            value={name}
-            onFocus={() => {
-              setErrors((prev) => ({
-                ...prev,
-                name: "",
-              }));
-            }}
-            error={errors.name}
-          />
-          <FormInput placeholder="Email" value={email} editable={false} />
-          <FormInput
-            placeholder="CRMV"
-            value={crmv}
-            editable={false}
-            lastInput={true}
+      <View style={globalStyles.container}>
+        <View style={style.container}>
+          <View style={style.alterContainer}>
+            <FormInput
+              placeholder="Nome"
+              onChangeText={(value) => {
+                if (value.length <= 30) {
+                  setName(value);
+                }
+              }}
+              value={name}
+              onFocus={() => {
+                setErrors((prev) => ({
+                  ...prev,
+                  name: "",
+                }));
+              }}
+              error={errors.name}
+            />
+            <FormInput placeholder="Email" value={email} editable={false} />
+            <FormInput
+              placeholder="CRMV"
+              value={crmv}
+              editable={false}
+              lastInput={true}
+            />
+          </View>
+          <SubmitButton
+            loading={loading}
+            label="SALVAR"
+            onPress={handleSubmit}
           />
         </View>
-        <SubmitButton loading={loading} label="SALVAR" onPress={handleSubmit} />
       </View>
     </TouchableWithoutFeedback>
   );

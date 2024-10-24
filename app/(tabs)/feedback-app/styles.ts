@@ -3,95 +3,52 @@ import { themes } from "../../global/themes";
 
 export const style = StyleSheet.create({
   container: {
+    flex: 1,
     alignItems: "center",
     backgroundColor: themes.colors.background,
     width: "100%",
-    height: "100%",
     paddingHorizontal: 12,
+    gap: 20,
   },
-  topIten: {
-    position: "absolute",
+  starsContainer: {
     width: "100%",
-    alignItems: "center",
+    gap: 4,
   },
-  headerTop: {
-    fontFamily: themes.fonts.title,
-    fontSize: 16,
-    color: themes.colors.darkGreen,
-  },
-  topContent: {
-    alignItems: "center",
-    flexDirection: "row",
-    height: "15%",
-    width: "100%",
-    marginTop: "3%",
-  },
-  containerOptions: {
-    width: "100%",
-    height: "8%",
+  starsContent: {
+    paddingVertical: 12,
+    gap: 12,
     backgroundColor: themes.colors.white,
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "row",
   },
-  containerOptionsError: {
-    width: "100%",
-    height: "8%",
-    backgroundColor: themes.colors.white,
-    borderRadius: 12,
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "row",
+  starsContentError: {
     borderWidth: 1,
     borderColor: themes.colors.red,
   },
-  startFdb: {
-    width: "12%",
-    height: "75%",
-    margin: 4,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 25,
-  },
-  subTitleStyle: {
-    width: "100%",
-    height: "5%",
-    justifyContent: "flex-end",
+
+  errorText: {
+    textAlign: "center",
+    color: themes.colors.red,
+    fontFamily: themes.fonts.text,
   },
   subTitleText: {
     fontSize: 16,
     fontFamily: themes.fonts.title,
     color: themes.colors.darkGreen,
   },
-  containerInputComment: {
+  containerComment: {
     width: "100%",
-    backgroundColor: themes.colors.white,
-    borderRadius: 12,
-    minHeight: 40,
+    gap: 4,
   },
   textInput: {
-    flex: 1,
+    borderRadius: 12,
+    backgroundColor: themes.colors.white,
+    flexWrap: "wrap",
     fontSize: 16,
     fontFamily: themes.fonts.text,
     padding: 20,
-  },
-  btnText: {
-    fontSize: 16,
-    color: themes.colors.white,
-    fontFamily: themes.fonts.text,
-  },
-  btnArea: {
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  containerBtn: {
-    width: "100%",
-    height: "5%",
-    backgroundColor: themes.colors.orange,
-    borderRadius: 8,
-    marginTop: "4%",
+    textAlignVertical: "top",
   },
 });

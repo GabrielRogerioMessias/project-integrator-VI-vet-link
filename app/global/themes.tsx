@@ -9,13 +9,11 @@ export const themes = {
     white: "#fff",
     black: "#000",
     gray: "#BABABA",
+    star: "#E7E400",
   },
 
   fonts: {
     text: "Montserrat_400Regular",
     title: "Montserrat_700Bold",
   },
-  errors: {
-    color: "red",
-  }
 };

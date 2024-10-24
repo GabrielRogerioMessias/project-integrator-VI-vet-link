@@ -1,8 +1,13 @@
-import { useState } from "react";
 import { Stack } from "expo-router";
 import GlobalLayout from "../global/layout";
-import { StatusBar } from "expo-status-bar";
 import React from "react";
+
+const zoonosesTitles = {
+  leishmaniose: "Leishmaniose",
+  leptospirose: "Leptospirose",
+  raiva: "Raiva",
+  toxoplasmose: "Toxoplasmose",
+};
 
 const RootLayout = () => {
   return (

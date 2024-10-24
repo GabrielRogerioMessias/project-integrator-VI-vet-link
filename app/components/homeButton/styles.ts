@@ -15,12 +15,8 @@ export const style = StyleSheet.create({
     alignItems: "center",
     gap: 12,
   },
-  image: {
-    width: 50,
-    height: 50,
-  },
   text: {
     fontFamily: themes.fonts.text,
-    fontSize: 14,
+    fontSize: 20,
   },
 });
