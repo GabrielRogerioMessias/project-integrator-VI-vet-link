@@ -27,6 +27,7 @@ export default function ZoonosesPage() {
     sinais_clinicos: [] as DescriptionItem[],
     diagnostico: [] as DescriptionItem[],
     tratamento: [] as DescriptionItem[],
+    profilaxia: [] as DescriptionItem[],
     prevencao: [] as DescriptionItem[],
     humano: [] as DescriptionItem[],
     referencia: [] as DescriptionItem[],
@@ -52,6 +53,7 @@ export default function ZoonosesPage() {
             sinais_clinicos: data?.sinais_clinicos || [],
             diagnostico: data?.diagnostico || [],
             tratamento: data?.tratamento || [],
+            profilaxia: data?.profilaxia || [],
             prevencao: data?.prevencao || [],
             humano: data?.humano || [],
             referencia: data?.referencia || [],
@@ -101,6 +103,12 @@ export default function ZoonosesPage() {
             <EditableDescription
               title="TRATAMENTO"
               descriptionContent={descriptions.tratamento}
+            />
+          )}
+          {descriptions.profilaxia.length > 0 && (
+            <EditableDescription
+              title="PROFILAXIA"
+              descriptionContent={descriptions.profilaxia}
             />
           )}
           {descriptions.prevencao.length > 0 && (
