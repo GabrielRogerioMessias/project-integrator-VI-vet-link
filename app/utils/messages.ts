@@ -1,11 +1,16 @@
 const messages = {
   firebaseErrors: {
-    "auth/wrong-password": "Senha atual está incorreta.",
-    "auth/user-not-found": "Usuário não encontrado.",
-    "auth/weak-password": "A nova senha é muito fraca.",
-    "auth/requires-recent-login": "Reautenticação necessária.",
-    "auth/email-already-in-use": "Este email já está em uso.",
-    "auth/invalid-email": "O email é inválido.",
+    "auth/wrong-password": "Senha incorreta. Verifique e tente novamente.",
+    "auth/user-not-found":
+      "Usuário não encontrado. Verifique o e-mail informado.",
+    "auth/weak-password": "A senha informada é muito fraca.",
+    "auth/requires-recent-login": "É necessária uma reautenticação.",
+    "auth/email-already-in-use": "Este e-mail já está em uso.",
+    "auth/invalid-email": "O e-mail informado é inválido.",
+    "auth/too-many-requests":
+      "Muitas tentativas de login. Tente novamente mais tarde.",
+    "auth/network-request-failed":
+      "Falha de rede. Verifique sua conexão e tente novamente.",
   } as { [key: string]: string },
   validationErrors: {
     actualPassword: "A senha atual é obrigatória",

@@ -69,7 +69,8 @@ export default function Login() {
     } catch (e: any) {
       const err = e as FirebaseError;
       const errorMessage =
-        messages.firebaseErrors[err.code] || "Erro desconhecido.";
+        messages.firebaseErrors[err.code] ||
+        "Verifique suas credenciais e tente novamente.";
       Alert.alert("Falha no login ", errorMessage);
     } finally {
       setLoading(false);

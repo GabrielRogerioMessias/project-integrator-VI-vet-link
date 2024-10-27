@@ -30,7 +30,7 @@ export default function ForgotPassword() {
 
       Alert.alert(
         "Sucesso",
-        `Um link para redefinir sua senha foi enviado para o e-mail: ${email}.`
+        `Se o e-mail for válido, será enviado um link para redefinir sua senha para: ${email}.`
       );
       router.back();
     } catch (error: any) {

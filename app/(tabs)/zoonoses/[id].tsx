@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import firestore from "@react-native-firebase/firestore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import EditableDescription, {
   DescriptionItem,
 } from "../../components/EditableDescription";
@@ -40,35 +41,51 @@ export default function ZoonosesPage() {
   }, [zoonoseId, navigation]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchLocalData = async () => {
       try {
-        const zoonoseRef = firestore().collection("zoonoses").doc(zoonoseId);
-        const doc = await zoonoseRef.get();
-
-        if (doc.exists) {
-          const data = doc.data();
-          setDescriptions({
-            introducao: data?.introducao || [],
-            transmissao: data?.transmissao || [],
-            sinais_clinicos: data?.sinais_clinicos || [],
-            diagnostico: data?.diagnostico || [],
-            tratamento: data?.tratamento || [],
-            profilaxia: data?.profilaxia || [],
-            prevencao: data?.prevencao || [],
-            humano: data?.humano || [],
-            referencia: data?.referencia || [],
-          });
-        } else {
-          console.log("Documento não encontrado!");
+        const localData = await AsyncStorage.getItem(`zoonose_${zoonoseId}`);
+        if (localData) {
+          setDescriptions(JSON.parse(localData));
         }
       } catch (error) {
-        console.log("Erro ao buscar dados:", error);
+        console.log("Erro ao carregar dados locais:", error);
       }
     };
 
-    if (zoonoseId) {
-      fetchData();
-    }
+    const listenToFirestoreUpdates = () => {
+      const unsubscribe = firestore()
+        .collection("zoonoses")
+        .doc(zoonoseId)
+        .onSnapshot(async (doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            const updatedDescriptions = {
+              introducao: data?.introducao || [],
+              transmissao: data?.transmissao || [],
+              sinais_clinicos: data?.sinais_clinicos || [],
+              diagnostico: data?.diagnostico || [],
+              tratamento: data?.tratamento || [],
+              profilaxia: data?.profilaxia || [],
+              prevencao: data?.prevencao || [],
+              humano: data?.humano || [],
+              referencia: data?.referencia || [],
+            };
+
+            setDescriptions(updatedDescriptions);
+            await AsyncStorage.setItem(
+              `zoonose_${zoonoseId}`,
+              JSON.stringify(updatedDescriptions)
+            );
+          }
+        });
+
+      return unsubscribe;
+    };
+
+    fetchLocalData();
+    const unsubscribe = listenToFirestoreUpdates();
+
+    return () => unsubscribe();
   }, [zoonoseId]);
 
   return (
