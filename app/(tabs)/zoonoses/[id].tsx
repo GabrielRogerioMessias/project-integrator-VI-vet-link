@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import firestore from "@react-native-firebase/firestore";
-import EditableDescription from "../../components/EditableDescription";
+import EditableDescription, {
+  DescriptionItem,
+} from "../../components/EditableDescription";
 import { globalStyles } from "../../global/styles";
 import { useNavigation } from "@react-navigation/native";
 import { style } from "./styles";
@@ -20,11 +22,14 @@ export default function ZoonosesPage() {
   const navigation = useNavigation();
 
   const [descriptions, setDescriptions] = useState({
-    introducao: "",
-    transmissao: "",
-    sinais_clinicos: "",
-    diagnostico: "",
-    tratamento: "",
+    introducao: [] as DescriptionItem[],
+    transmissao: [] as DescriptionItem[],
+    sinais_clinicos: [] as DescriptionItem[],
+    diagnostico: [] as DescriptionItem[],
+    tratamento: [] as DescriptionItem[],
+    prevencao: [] as DescriptionItem[],
+    humano: [] as DescriptionItem[],
+    referencia: [] as DescriptionItem[],
   });
 
   useEffect(() => {
@@ -42,11 +47,14 @@ export default function ZoonosesPage() {
         if (doc.exists) {
           const data = doc.data();
           setDescriptions({
-            introducao: data?.introducao || "",
-            transmissao: data?.transmissao || "",
-            sinais_clinicos: data?.sinais_clinicos || "",
-            diagnostico: data?.diagnostico || "",
-            tratamento: data?.tratamento || "",
+            introducao: data?.introducao || [],
+            transmissao: data?.transmissao || [],
+            sinais_clinicos: data?.sinais_clinicos || [],
+            diagnostico: data?.diagnostico || [],
+            tratamento: data?.tratamento || [],
+            prevencao: data?.prevencao || [],
+            humano: data?.humano || [],
+            referencia: data?.referencia || [],
           });
         } else {
           console.log("Documento não encontrado!");
@@ -63,38 +71,58 @@ export default function ZoonosesPage() {
 
   return (
     <View style={globalStyles.container}>
-      <View style={style.container}>
-        <EditableDescription
-          title="Introdução"
-          descriptionContent={[
-            { type: "text", content: descriptions.introducao },
-          ]}
-        />
-        <EditableDescription
-          title="Transmissão"
-          descriptionContent={[
-            { type: "text", content: descriptions.transmissao },
-          ]}
-        />
-        <EditableDescription
-          title="Sinais Clínicos"
-          descriptionContent={[
-            { type: "text", content: descriptions.sinais_clinicos },
-          ]}
-        />
-        <EditableDescription
-          title="Diagnóstico"
-          descriptionContent={[
-            { type: "text", content: descriptions.diagnostico },
-          ]}
-        />
-        <EditableDescription
-          title="Tratamento"
-          descriptionContent={[
-            { type: "text", content: descriptions.tratamento },
-          ]}
-        />
-      </View>
+      <ScrollView>
+        <View style={style.container}>
+          {descriptions.introducao.length > 0 && (
+            <EditableDescription
+              title="INTRODUÇÃO"
+              descriptionContent={descriptions.introducao}
+            />
+          )}
+          {descriptions.transmissao.length > 0 && (
+            <EditableDescription
+              title="TRANSMISSÃO"
+              descriptionContent={descriptions.transmissao}
+            />
+          )}
+          {descriptions.sinais_clinicos.length > 0 && (
+            <EditableDescription
+              title="SINAIS CLÍNICOS"
+              descriptionContent={descriptions.sinais_clinicos}
+            />
+          )}
+          {descriptions.diagnostico.length > 0 && (
+            <EditableDescription
+              title="DIAGNÓSTICO"
+              descriptionContent={descriptions.diagnostico}
+            />
+          )}
+          {descriptions.tratamento.length > 0 && (
+            <EditableDescription
+              title="TRATAMENTO"
+              descriptionContent={descriptions.tratamento}
+            />
+          )}
+          {descriptions.prevencao.length > 0 && (
+            <EditableDescription
+              title="PREVENÇÃO"
+              descriptionContent={descriptions.prevencao}
+            />
+          )}
+          {descriptions.humano.length > 0 && (
+            <EditableDescription
+              title="SERES HUMANOS"
+              descriptionContent={descriptions.humano}
+            />
+          )}
+          {descriptions.referencia.length > 0 && (
+            <EditableDescription
+              title="REFERÊNCIAS"
+              descriptionContent={descriptions.referencia}
+            />
+          )}
+        </View>
+      </ScrollView>
     </View>
   );
 }
