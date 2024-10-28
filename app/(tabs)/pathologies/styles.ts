@@ -55,6 +55,10 @@ export const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
+  icon: {
+    fontSize: 20,
+    color: themes.colors.gray,
+  },
   bntStyle: {
     width: "100%",
     height: "100%",

@@ -2,15 +2,13 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   View,
-  Image,
   Text,
   TouchableOpacity,
 } from "react-native";
-
-import moreThan from "../../assets/MoreThanIcon.png";
 import { style } from "./styles";
 import { globalStyles } from "../../global/styles";
 import { router } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 
 export default function Pathologies() {
   return (
@@ -25,7 +23,7 @@ export default function Pathologies() {
               >
                 <Text style={style.btnText}>Leptospirose</Text>
               </TouchableOpacity>
-              <Image source={moreThan} resizeMode="contain" />
+              <Feather name="chevron-right" style={style.icon} />
             </View>
             <View style={style.optionContainerOne}>
               <TouchableOpacity
@@ -34,7 +32,7 @@ export default function Pathologies() {
               >
                 <Text style={style.btnText}>Leishmaniose</Text>
               </TouchableOpacity>
-              <Image source={moreThan} resizeMode="contain" />
+              <Feather name="chevron-right" style={style.icon} />
             </View>
             <View style={style.optionContainerOne}>
               <TouchableOpacity
@@ -43,7 +41,7 @@ export default function Pathologies() {
               >
                 <Text style={style.btnText}>Raiva</Text>
               </TouchableOpacity>
-              <Image source={moreThan} resizeMode="contain" />
+              <Feather name="chevron-right" style={style.icon} />
             </View>
             <View style={style.optionContainersTwo}>
               <TouchableOpacity
@@ -52,7 +50,7 @@ export default function Pathologies() {
               >
                 <Text style={style.btnText}>Toxoplasmose</Text>
               </TouchableOpacity>
-              <Image source={moreThan} resizeMode="contain" />
+              <Feather name="chevron-right" style={style.icon} />
             </View>
           </View>
         </View>

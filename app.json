@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "vet-link",
+    "name": "Vet Link",
     "slug": "vet-link",
     "scheme": "vet-link",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.svg",
+    "icon": "./app/assets/icon.png",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#F0F0F0",
     "splash": {
@@ -20,8 +20,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./app/assets/adaptive-icon.png",
+        "backgroundColor": "#7B9971"
       },
       "package": "com.galaxies.firebase",
       "googleServicesFile": "./google-services.json"
