@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import {
   Text,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  KeyboardAvoidingView,
   ActivityIndicator,
   Alert,
   Platform,
+  KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
 import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { style } from "./styles";
@@ -22,6 +22,12 @@ import { globalStyles } from "../../global/styles";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import messages from "../../utils/messages";
+
+const referenceHeight = 1200;
+const currentHeight = Dimensions.get("window").height;
+
+const scaleFactor = currentHeight / referenceHeight;
+const logoSize = 200 * scaleFactor;
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -88,10 +94,10 @@ export default function Login() {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView style={style.container}>
+      <View style={style.container}>
         <StatusBar backgroundColor={themes.colors.lightGreen} />
         <View style={style.topContent}>
-          <Logo width={160} height={160} />
+          <Logo width={logoSize} height={logoSize} />
           <View style={style.logoText}>
             <Text style={style.smallText}>VET</Text>
             <Text style={style.bigText}>LINK</Text>
@@ -159,12 +165,12 @@ export default function Login() {
                 >
                   <Text style={style.btnText}>Cadastre-se agora!</Text>
                 </TouchableOpacity>
+                <Text style={style.infoText}>v1.0</Text>
               </View>
-              <Text style={style.infoText}>v1.0</Text>
             </>
           )}
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </TouchableWithoutFeedback>
   );
 }

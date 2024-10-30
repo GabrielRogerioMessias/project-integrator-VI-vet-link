@@ -1,18 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import { themes } from "../../global/themes";
+
+const screenHeight = Dimensions.get("window").height;
+const oneThirdHeight = Math.floor(screenHeight / 3);
 
 export const style = StyleSheet.create({
   container: {
     flex: 1,
-    zIndex: 0,
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: themes.colors.lightGreen,
     width: "100%",
     paddingHorizontal: 12,
   },
   topContent: {
-    height: "33%",
+    height: oneThirdHeight,
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -37,7 +37,7 @@ export const style = StyleSheet.create({
     fontFamily: themes.fonts.title,
   },
   midContent: {
-    height: "33%",
+    height: oneThirdHeight,
     width: "100%",
     gap: 20,
   },
@@ -50,21 +50,13 @@ export const style = StyleSheet.create({
     color: themes.colors.white,
   },
   boxInput: {
+    width: "100%",
     backgroundColor: themes.colors.white,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: themes.colors.darkGreen,
     flexDirection: "row",
-    paddingHorizontal: 20,
-    alignItems: "center",
-  },
-  boxInputError: {
-    backgroundColor: themes.colors.white,
-    borderRadius: 12,
-    borderWidth: 2,
-    borderColor: themes.colors.red,
-    flexDirection: "row",
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
     alignItems: "center",
   },
   icon: {
@@ -72,8 +64,7 @@ export const style = StyleSheet.create({
     color: themes.colors.darkGreen,
   },
   input: {
-    height: "100%",
-    width: "90%",
+    width: "86%",
     padding: 8,
     fontSize: 16,
     fontFamily: themes.fonts.text,
@@ -89,14 +80,14 @@ export const style = StyleSheet.create({
     textDecorationLine: "underline",
   },
   botContent: {
-    height: "33%",
+    height: oneThirdHeight,
     width: "100%",
     alignItems: "center",
     gap: 12,
   },
   loginBtn: {
     width: "100%",
-    padding: 16,
+    paddingVertical: 12,
     backgroundColor: themes.colors.darkGreen,
     borderRadius: 8,
     alignItems: "center",
@@ -109,7 +100,7 @@ export const style = StyleSheet.create({
   },
   signupBtn: {
     width: "100%",
-    padding: 16,
+    paddingVertical: 12,
     backgroundColor: themes.colors.red,
     borderRadius: 8,
     alignItems: "center",
@@ -121,6 +112,7 @@ export const style = StyleSheet.create({
     color: themes.colors.white,
   },
   infoText: {
+    textAlign: "center",
     fontSize: 16,
     fontFamily: themes.fonts.text,
     color: themes.colors.gray,
